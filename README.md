@@ -21,4 +21,8 @@ pip install keras
 </p>
 pip install tensorflow
 </code>
+TensorFlow is tested and supported on the following 64-bit systems: Python 3.5–3.8.
 </p>
+
+# Usage:
+ python video_capture.py
