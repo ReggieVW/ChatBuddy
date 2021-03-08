@@ -28,7 +28,7 @@ TensorFlow is tested and supported on the following 64-bit systems: Python 3.5â€
 </p>
 
 # Usage:
- To run 
+ To run the emotion detector
  <code>
  python video_capture.py
  </code>
