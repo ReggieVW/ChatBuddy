@@ -17,6 +17,7 @@ pip install opencv-python
 <code>
 pip install keras
 </code>
+</p>
 <code>
 pip install pandas
 </code>
