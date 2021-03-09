@@ -8,10 +8,6 @@ pip install numpy
 </code>
 </p>
 <code>
-pip install numpy
-</code>
-</p>
-<code>
 pip install opencv-python
 </code>
 </p>
