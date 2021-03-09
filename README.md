@@ -1,5 +1,6 @@
 # ChatBuddy
-Chat Buddy for the elderly
+ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
+It integrates video processing, sound processing & chat to interact with the user. 
 
 # Dependencies
 <code>
@@ -33,3 +34,5 @@ TensorFlow is tested and supported on the following 64-bit systems: Python 3.5â€
  <code>
  python video_capture.py
  </code>
+ </p>
+ To quit, press "q".
