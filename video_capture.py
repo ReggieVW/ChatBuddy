@@ -14,8 +14,9 @@ model =load_model(r'facial_sentiment\Emotion_little_vgg.h5')
 video_capture = cv2.VideoCapture(0)
 
 class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
+loop_break = True
 
-while True:
+while loop_break:
     ret,img=video_capture.read()# captures frame and returns boolean value and captured image
     if not ret:
         continue
@@ -26,8 +27,7 @@ while True:
     for (x,y,w,h) in faces_detected:
         if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
             print("pressed 'q'")
-            video_capture.release()
-            cv2.destroyAllWindows()
+            loop_break = False
                 # When everything is done, release the capture
             break
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),thickness=7)
