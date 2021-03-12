@@ -22,7 +22,13 @@ pip install pandas
 </p>
 pip install tensorflow
 </code>
-TensorFlow is now supported on the following 64-bit systems: Python 3.5–3.8.
+TensorFlow is now (3/21) supported on the following 64-bit systems: Python 3.5–3.8.
+</p>
+<p>
+<code>
+pip install Pillow
+ </code>
+<code>
 </p>
 
 # Usage:
