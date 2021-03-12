@@ -28,7 +28,6 @@ TensorFlow is now (3/21) supported on the following 64-bit systems: Python 3.5â€
 <code>
 pip install Pillow
  </code>
-<code>
 </p>
 
 # Usage:
