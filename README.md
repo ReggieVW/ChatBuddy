@@ -37,3 +37,7 @@ pip install Pillow
  </code>
  </p>
  To quit, press "q".
+ 
+ # Dataset:
+ Kaggle dataset for emotion detection
+ https://www.kaggle.com/jonathanoheix/face-expression-recognition-dataset
