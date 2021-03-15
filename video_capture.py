@@ -8,6 +8,18 @@ from keras.preprocessing.image import img_to_array
 #from face_encoding.encoding_scan import FaceEncoding
 import threading
 
+# initialize the Haar Cascade face detection model
+face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
+#load weights
+model =load_model(r'facial_sentiment\Emotion_little_vgg.h5')
+
+video_capture = cv2.VideoCapture(0)
+
+class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
+names = []
+loop_break = True
+welcome_executed = False
+
 #Methods
 def welcome_user(image, names):
     faceRecog = FaceEncoding("known_faces")
@@ -22,18 +34,6 @@ def welcome_user(image, names):
         faceRecog.add_image(image, name)
         print("Hello "+name)
         names.append(name)
-
-# initialize the Haar Cascade face detection model
-face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
-#load weights
-model =load_model(r'facial_sentiment\Emotion_little_vgg.h5')
-
-video_capture = cv2.VideoCapture(0)
-
-class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
-names = []
-loop_break = True
-welcome_executed = False
 
 while loop_break:
     ret,img=video_capture.read()# captures frame and returns boolean value and captured image
