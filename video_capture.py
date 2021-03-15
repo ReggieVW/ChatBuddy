@@ -5,7 +5,7 @@ from keras.models import model_from_json
 from keras.preprocessing import image
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
-from face_encoding.encoding_scan import FaceEncoding
+#from face_encoding.encoding_scan import FaceEncoding
 import threading
 
 #Methods
@@ -52,8 +52,8 @@ while loop_break:
     # Todo: what if multiple faces are on screen
     if len(names) == 0 and len(faces_detected) == 1 and not welcome_executed: 
         imageCopy = img.copy()
-        thread = threading.Thread(target = welcome_user, args = (imageCopy, names ))
-        thread.start()
+        #thread = threading.Thread(target = welcome_user, args = (imageCopy, names ))
+        #thread.start()
         welcome_executed = False
         
     if len(faces_detected) != 0:
