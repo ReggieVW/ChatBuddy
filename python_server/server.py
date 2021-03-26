@@ -39,6 +39,8 @@ def register():
             print("no face detected")
             data = {"register": 0, "status":204}
             return json.dumps(data)
+        if not os.path.exists("known_faces"):
+            os.makedirs("known_faces")
         faceRecog = FaceEncodingPickle("known_faces")
         faceRecog.add_image(image, username)
         os.remove(path)   
