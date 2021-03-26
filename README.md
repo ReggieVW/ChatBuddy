@@ -77,7 +77,7 @@ pip install imutils
 # Usage Python script:
  To run the emotion detector
  <code>
- python video_capture.py
+ python video_capture_emotion.py
  </code>
  </p>
  To quit, press "q".
