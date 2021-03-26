@@ -31,11 +31,6 @@ pip install Pillow
 </p>
 <p>
 <code>
-pip install Pillow
- </code>
-</p>
-<p>
-<code>
 pip install flask
  </code>
 </p>
@@ -66,11 +61,13 @@ pip install imutils
  <code>
  npm install
  </code>
+  Install the dependencies in the node_modules folder.
  </p>
  <p>
   <code>
  npm start
  </code>
+ Runs the web app on http://localhost:3000/
  </p>
 
 
