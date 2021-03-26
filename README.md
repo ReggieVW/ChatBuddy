@@ -72,7 +72,13 @@ pip install imutils
 
 
 # Usage Python script:
+To run the server
+ <code>
+ python server.py
+ </code>
+ </p>
  To run the emotion detector
+ <p>
  <code>
  python video_capture_emotion.py
  </code>
