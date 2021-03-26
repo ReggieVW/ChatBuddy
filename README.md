@@ -2,7 +2,7 @@
 ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
 It integrates video processing, sound processing & chat to interact with the user. 
 
-# Dependencies
+# Dependencies Python
 <code>
 pip install numpy
 </code>
@@ -29,8 +29,52 @@ TensorFlow is now (3/21) supported on the following 64-bit systems: Python 3.5â€
 pip install Pillow
  </code>
 </p>
+<p>
+<code>
+pip install Pillow
+ </code>
+</p>
+<p>
+<code>
+pip install flask
+ </code>
+</p>
+<p>
+<code>
+pip install flask_cors
+ </code>
+</p>
+<p>
+<code>
+pip install cMake
+ </code>
+  install Visual Studio with C++ compiler.
+</p>
+<p>
+<code>
+pip install face_recognition
+ </code>
+</p>
+<p>
+<code>
+pip install imutils
+ </code>
+</p>
 
-# Usage:
+# Frontend React
+<p>
+ <code>
+ npm install
+ </code>
+ </p>
+ <p>
+  <code>
+ npm start
+ </code>
+ </p>
+
+
+# Usage Python script:
  To run the emotion detector
  <code>
  python video_capture.py
