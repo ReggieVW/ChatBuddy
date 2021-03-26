@@ -1,0 +1,13 @@
+video{
+	border: 0px solid;
+	position: absolute;
+	top: 570px;
+	left:455px;
+	width: 400px;
+	height: 440px
+}
+
+#video{
+	width: 440px;
+	height: 440px
+}
