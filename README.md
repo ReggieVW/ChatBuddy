@@ -43,7 +43,7 @@ pip install flask_cors
 <code>
 pip install cMake
  </code>
-  install Visual Studio with C++ compiler.
+  Install Visual Studio with C++ compiler.
 </p>
 <p>
 <code>
