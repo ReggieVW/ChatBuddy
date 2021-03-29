@@ -77,13 +77,7 @@ To run the server
  python server.py
  </code>
  </p>
- To run the emotion detector
- <p>
- <code>
- python video_capture_emotion.py
- </code>
- </p>
- To quit, press "q".
+
  
  # Dataset:
  Kaggle dataset for emotion detection
