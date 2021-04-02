@@ -38,7 +38,7 @@ export class Verify extends Component {
     	this.props.backhome();
     }
 
-    setup2(){
+    signin(){
     	const button = document.getElementById('submit');
         button.addEventListener('click', async event => {
           video.loadPixels();
@@ -94,7 +94,7 @@ export class Verify extends Component {
 									
 									 
 									<div className="container-login100-form-btn m-t-17">
-										<button id="submit" onMouseDown={this.setup2.bind(this)} className="login100-form-btn">
+										<button id="submit" onMouseDown={this.signin.bind(this)} className="login100-form-btn">
 											Sign In
 										</button>
 									</div>
