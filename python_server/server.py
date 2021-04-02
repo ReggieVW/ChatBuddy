@@ -73,19 +73,10 @@ def verification():
     
 @app.route('/video_feed')
 def video_feed():
-    print("video_feed testing")
+    print("video_feed")
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-                    
-@app.route('/test')
-def test():
-    print("name testing")
-    data = {'name': 'reginald'}
-    return jsonify(data)
-    
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}
+
                     
 def gen(camera):
     while True:
