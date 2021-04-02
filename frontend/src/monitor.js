@@ -5,7 +5,6 @@ export class Monitor extends Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {
-		items: [],
 		imageStatus: "loading"
 	  };
 	}
