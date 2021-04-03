@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import { Comment, Header } from 'semantic-ui-react';
 import ElizaBot from 'elizabot';
 import debounce from 'lodash.debounce';
-import './css/video.css';
+import './css/main.css';
+import './css/util.css';
+import './monitor.css';
 
 import ChatHistory from './ChatHistory'
 import ChatInput from './ChatInput'
