@@ -37,6 +37,10 @@
 body, html {
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
+	background-image: url('../images/bg-11.jpg');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 /*---------------------------------------------*/
@@ -175,11 +179,9 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background-image: url('../images/bg-11.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;;
 }
+
+
 
 
 .wrap-login100 {
