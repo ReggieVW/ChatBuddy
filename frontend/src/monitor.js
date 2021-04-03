@@ -4,7 +4,7 @@ import ElizaBot from 'elizabot';
 import debounce from 'lodash.debounce';
 import './css/main.css';
 import './css/util.css';
-import './monitor.css';
+import './css/semantic.css';
 
 import ChatHistory from './ChatHistory'
 import ChatInput from './ChatInput'
@@ -73,6 +73,10 @@ export class Monitor extends Component {
 	handleImageErrored() {
 		this.setState({ imageStatus: "failed to load" });
 	 }
+	 
+	logout(){
+    	this.props.backhome();
+    }
   
 	render() {
 		return (
@@ -86,10 +90,15 @@ export class Monitor extends Component {
           <ChatInput inputHandler={this.handleInput} />
         </Comment.Group>
 	  </div>
-	  <div class="col-sm-8">
+	  <div class="col-sm-6">
 			<img src={'/video_feed'} className="video" alt="video" onLoad={this.handleImageLoaded.bind(this)} onError={this.handleImageErrored.bind(this)}/>
 			{this.state.imageStatus}
    	  </div>
+	 <div class="col-sm-2">
+			<button onClick={this.logout.bind(this)} className="login100-form-btn">
+				Back!
+		</button>
+	</div>		
 	  </div>
 		);
 	}
