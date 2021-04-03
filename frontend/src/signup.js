@@ -67,14 +67,7 @@ export class Signup extends Component {
 									<span className="login100-form-title p-b-53">
 										Sign Up
 									</span>
-
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-
+									
 									<div className="p-t-31 p-b-9">
 										<span className="txt1">
 											Username
@@ -84,6 +77,15 @@ export class Signup extends Component {
 										<input id="usernameid" className="input100" type="text" name="username" />
 										<span className="focus-input100"></span>
 									</div>
+
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+
+
 									<input/>
 									<br/><br/>
 
