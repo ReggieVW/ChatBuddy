@@ -112,7 +112,7 @@ export class Verify extends Component {
 
 
     	return (<div >
-    		{this.state.verify? <Monitor/>: verify }
+    		{this.state.verify? <Monitor backhome={this.props.backhome}/>: verify }
     		</div>
 		)
 	}
