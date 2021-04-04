@@ -5,79 +5,56 @@ from keras.preprocessing import image
 import cv2
 import numpy as np
 
-face_classifier = cv2.CascadeClassifier(r'haarcascade_frontalface_default.xml')
-classifier =load_model(r'Emotion_little_vgg.h5')
+# initialize the Haar Cascade face detection model
+face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
+
+model =load_model(r'Emotion_little_vgg.h5')
+video_capture = cv2.VideoCapture(0)
 
 class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
+loop_break = True
 
-# input image
-img = cv2.imread(r"00044.jpg")
+while loop_break:
+    ret,img=video_capture.read()# captures frame and returns boolean value and captured image
+    if not ret or img is None:
+        continue
+    if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
+        print("pressed 'q'")
+        loop_break = False
+        # When everything is done, release the capture
+        break
+    gray= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-labels = []
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-faces = face_classifier.detectMultiScale(gray,1.3,5)
+    faces_detected = face_haar_cascade.detectMultiScale(gray, 1.32, 5)
 
-for (x,y,w,h) in faces:
-    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-    roi_gray = gray[y:y+h,x:x+w]
-    roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
-    # rect,face,image = face_detector(frame)
+        
+    if len(faces_detected) != 0:
+        
+        for (x,y,w,h) in faces_detected:
+            cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),thickness=7)
+            roi_gray = gray[y:y+h,x:x+w]
+            roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
 
+            if np.sum([roi_gray])!=0:
+                roi = roi_gray.astype('float')/255.0
+                roi = img_to_array(roi)
+                roi = np.expand_dims(roi,axis=0)
 
-    if np.sum([roi_gray])!=0:
-        roi = roi_gray.astype('float')/255.0
-        roi = img_to_array(roi)
-        roi = np.expand_dims(roi,axis=0)
+            # make a prediction on the ROI, then lookup the class
+                preds = model.predict(roi)[0]
+                label=class_labels[preds.argmax()]
+                label_position = (x,y)
+                cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
+            else:
+                cv2.putText(img,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
 
-        # make a prediction on the ROI, then lookup the class
-
-        preds = classifier.predict(roi)[0]
-        label=class_labels[preds.argmax()]
-        label_position = (x,y)
-        cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
-    else:
-        cv2.putText(img,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
-cv2.imshow('Emotion Detector',img)
-    #if cv2.waitKey(1) & 0xFF == ord('q'):
-        #break
-cv2.waitKey(0)
-
-## real-time video streaming
-# cap = cv2.VideoCapture(0)
-
-# while True:
-#     # Grab a single frame of video
-#     ret, frame = cap.read()
-#     labels = []
-#     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-#     faces = face_classifier.detectMultiScale(gray,1.3,5)
-
-#     for (x,y,w,h) in faces:
-#         cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-#         roi_gray = gray[y:y+h,x:x+w]
-#         roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
-#     # rect,face,image = face_detector(frame)
+    resized_img = cv2.resize(img, (1000, 700))
+    cv2.imshow('Facial emotion analysis ',resized_img)
 
 
-#         if np.sum([roi_gray])!=0:
-#             roi = roi_gray.astype('float')/255.0
-#             roi = img_to_array(roi)
-#             roi = np.expand_dims(roi,axis=0)
-
-#         # make a prediction on the ROI, then lookup the class
-
-#             preds = classifier.predict(roi)[0]
-#             label=class_labels[preds.argmax()]
-#             label_position = (x,y)
-#             cv2.putText(frame,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
-#         else:
-#             cv2.putText(frame,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
-#     cv2.imshow('Emotion Detector',frame)
-#     if cv2.waitKey(1) & 0xFF == ord('q'):
-#         break
-
-# cap.release()
-# cv2.destroyAllWindows()
+# When everything is done, release the capture
+video_capture.release()
+cv2.destroyAllWindows()
 
 
 
