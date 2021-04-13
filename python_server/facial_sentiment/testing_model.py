@@ -11,7 +11,7 @@ face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcasc
 model =load_model(r'Emotion_little_vgg.h5')
 video_capture = cv2.VideoCapture(0)
 
-class_labels = ['angry','fear','sad','happy','surprised','neutral','disgusted']
+class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
 loop_break = True
 
 while loop_break:
@@ -44,7 +44,7 @@ while loop_break:
                 preds = model.predict(roi)[0]
                 label=class_labels[preds.argmax()]
                 label_position = (x,y)
-                cv2.putText(img,str(preds.argmax()),label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
+                cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
             else:
                 cv2.putText(img,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
 
