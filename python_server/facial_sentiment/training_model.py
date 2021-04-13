@@ -8,7 +8,7 @@ import os
 from keras.optimizers import RMSprop,SGD,Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
-num_classes = 8
+num_classes = 7
 img_rows,img_cols = 48,48
 batch_size = 32
 
@@ -141,7 +141,7 @@ model.compile(loss='categorical_crossentropy',
 
 nb_train_samples = 24176
 nb_validation_samples = 3006
-epochs=25
+epochs=30
 
 history=model.fit_generator(
                 train_generator,
