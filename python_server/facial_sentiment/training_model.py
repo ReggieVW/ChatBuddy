@@ -150,4 +150,4 @@ history=model.fit_generator(
                 callbacks=callbacks,
                 validation_data=validation_generator,
                 validation_steps=nb_validation_samples//batch_size)
-model.save_weights("face_emotion.h5")
+model.save_weights("Emotion_face.h5")
