@@ -56,9 +56,10 @@ export class Verify extends Component {
           console.log(response.data.identity);
           if(response.data.identity){
           	this.stop();
+			this.state.identity = []
 	        this.setState({
 	        	verify:true,
-	        	idenity: response.data.identity
+	        	idenity: this.state.identity.push(response.data.identity)
 	        })
           } else {
           	this.stop();
@@ -112,7 +113,7 @@ export class Verify extends Component {
 
 
     	return (<div >
-    		{this.state.verify? <Monitor backhome={this.props.backhome}/>: verify }
+    		{this.state.verify? <Monitor backhome={this.props.backhome} profilename={this.state.identity}/>: verify }
     		</div>
 		)
 	}
