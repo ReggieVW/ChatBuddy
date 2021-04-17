@@ -4,7 +4,7 @@ import time
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, send_file, make_response 
 import cv2
 import json
 import numpy as np
@@ -13,6 +13,8 @@ import base64
 from datetime import datetime
 from camera import VideoCamera
 from face_encoding.encoding_scan_pickle import FaceEncodingPickle
+import urllib
+import io
 
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
@@ -39,9 +41,9 @@ def register():
             print("no face detected")
             data = {"register": 0, "status":204}
             return json.dumps(data)
-        if not os.path.exists("known_faces"):
-            os.makedirs("known_faces")
-        faceRecog = FaceEncodingPickle("known_faces")
+        if not os.path.exists("../known_faces"):
+            os.makedirs("../known_faces")
+        faceRecog = FaceEncodingPickle("../known_faces")
         faceRecog.add_image(image, username)
         os.remove(path)   
         return json.dumps({"register": str("OK")})
@@ -49,7 +51,7 @@ def register():
         return json.dumps({"status": 500})
 
 def check_user_exist(image):
-    faceRecog = FaceEncodingPickle("known_faces")
+    faceRecog = FaceEncodingPickle("../known_faces")
     name = faceRecog.scan_image(image)
     return name
 
@@ -58,12 +60,12 @@ def verification():
     print("verify:")
     img_data = request.get_json()['image64']
     img_name = str(int(datetime.timestamp(datetime.now())))
-    directory = 'images'
+    directory = '../images'
     if not os.path.exists(directory):
         os.makedirs(directory)
     with open(directory+'/'+img_name+'.jpg', "wb") as fh:
         fh.write(base64.b64decode(img_data[22:]))
-    path = 'images/'+img_name+'.jpg'
+    path = directory+'/'+img_name+'.jpg'
     image = cv2.imread(path)
     name = check_user_exist(image)
     os.remove(path)
@@ -76,6 +78,23 @@ def video_feed():
     print("video_feed")
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+                     
+@app.route('/profilepicture')
+def profile_picture():
+    profile_name = request.args.get('profilename')
+    print(profile_name)
+    faceRecog = FaceEncodingPickle("../known_faces")
+    image_file = faceRecog.get_image_file_profile(profile_name)
+    #print(image_file)
+    #return json.dumps({"filename": str(image_file)})
+    #filename = "known_faces\\reginald\\b5ab2e48-6e5b-4a32-8bf2-60d8068b53bf.jpg"
+    file = open(image_file, 'rb')
+    byte_io = io.BytesIO()
+    byte_io.write(file.read())
+    byte_io.seek(0)
+    response = make_response(send_file(byte_io,mimetype='image/jpg'))
+    response.headers['Content-Transfer-Encoding']='base64'
+    return response 
 
                     
 def gen(camera):
