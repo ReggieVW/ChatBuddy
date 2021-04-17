@@ -10,7 +10,7 @@ face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcasc
 #load weights
 model =load_model(r'facial_sentiment\Emotion_face.h5')
 
-class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise', 'Fear']
+class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 class VideoCamera(object):
     def __init__(self):
