@@ -8,7 +8,7 @@ import numpy as np
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
 
-model =load_model(r'Emotion_little_vgg.h5')
+model =load_model(r'Emotion_face.h5')
 video_capture = cv2.VideoCapture(0)
 
 class_labels = ['Angry','Happy','Neutral','Sad','Surprise']
