@@ -54,6 +54,11 @@ pip install face_recognition
 <code>
 pip install imutils
  </code>
+ </p>
+<p>
+ <code>
+pip install mediapipe
+</code>
 </p>
 
 # Frontend React
