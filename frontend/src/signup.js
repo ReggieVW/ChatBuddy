@@ -68,6 +68,8 @@ export class Signup extends Component {
 										Sign Up
 									</span>
 									
+
+									
 									<div className="p-t-31 p-b-9">
 										<span className="txt1">
 											Username
@@ -78,15 +80,14 @@ export class Signup extends Component {
 										<span className="focus-input100"></span>
 									</div>
 
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
 
-
-									<input/>
+									
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
+									<br/><br/>
 									<br/><br/>
 
 									{this.state.signup?<Sketch id="s" setup={this.setup} draw={this.draw}/>:''}
