@@ -114,7 +114,7 @@ print(model.summary())
 
 
 
-checkpoint = ModelCheckpoint('Emotion_little_vgg.h5',
+checkpoint = ModelCheckpoint('Emotion_face.h5',
                              monitor='val_loss',
                              mode='min',
                              save_best_only=True,
