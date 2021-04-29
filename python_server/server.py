@@ -13,8 +13,11 @@ import base64
 from datetime import datetime
 from camera import VideoCamera
 from face_encoding.encoding_scan_pickle import FaceEncodingPickle
+from sentiment_transformer import SentimentImage
 import urllib
 import io
+from datetime import datetime
+import glob
 
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
@@ -73,28 +76,66 @@ def verification():
         return json.dumps({"identity": 0})
     return json.dumps({"identity": str(name)})
     
-@app.route('/video_feed')
-def video_feed():
-    print("video_feed")
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-                     
-@app.route('/profilepicture')
-def profile_picture():
+@app.route('/add_emotion_image', methods=['POST'])
+def add_emotion_image():
+        img_name = ""
+        img_data = request.get_json()['image64']
+        profilename = request.get_json()['profilename']
+        img_name = str(int(datetime.timestamp(datetime.now())))
+        directory = './images/'+str(profilename)+'/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        with open(directory+'/'+img_name+'.jpg', "wb") as fh:
+            fh.write(base64.b64decode(img_data[22:]))
+        path = directory+'/'+img_name+'.jpg'
+        img = cv2.imread(path)
+        transformed_img = SentimentImage.transform(img)
+        path_transformed = directory+'/'+img_name+'_pred.jpg'
+        cv2.imwrite(path_transformed, img)
+        print("written file "+ path_transformed)
+        os.remove(path)
+        return json.dumps({"executed": str("OK")})
+        # Filename
+        # Using cv2.imwrite() method
+        # Saving the image
+        #os.remove(path)
+    
+@app.route('/get_emotion_image')
+def get_emotion_image_path():
+    print("get_emotion_image_path:")
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print("Current Time =", current_time)
     profile_name = request.args.get('profilename')
-    print(profile_name)
-    faceRecog = FaceEncodingPickle("../known_faces")
-    image_file = faceRecog.get_image_file_profile(profile_name)
-    #print(image_file)
-    #return json.dumps({"filename": str(image_file)})
-    #filename = "known_faces\\reginald\\b5ab2e48-6e5b-4a32-8bf2-60d8068b53bf.jpg"
-    file = open(image_file, 'rb')
+    directory = './images/'+str(profile_name)+'/'
+    list_of_files = glob.glob(directory+'/*pred.jpg') 
+    latest_file = max(list_of_files, key=os.path.getctime)
+    print("Get file =", latest_file)
+    file = open(latest_file, 'rb')
     byte_io = io.BytesIO()
     byte_io.write(file.read())
     byte_io.seek(0)
     response = make_response(send_file(byte_io,mimetype='image/jpg'))
     response.headers['Content-Transfer-Encoding']='base64'
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print("Current Time =", current_time)
     return response 
+    
+@app.route('/test')
+def test():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print("Current Time =", current_time)
+    return json.dumps({"executed": str(current_time)})
+    
+@app.route('/video_feed')
+def video_feed():
+    print("video_feed")
+    cam = VideoCamera()
+    return Response(gen(cam),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+                                              
 
                     
 def gen(camera):
