@@ -7,7 +7,6 @@ import "./css/util.css";
 import "./css/semantic.css";
 import "./monitor.css";
 import Sketch from "react-p5";
-import ImageGallery from "react-image-gallery";
 import "./css/carousel.css";
 import { Carousel } from "react-responsive-carousel";
 import ChatHistory from "./ChatHistory";
@@ -24,8 +23,6 @@ const operation = retry.operation({
   maxTimeout: 60 * 1000,
   randomize: true,
 });
-
-Massachusetts;
 
 export class Monitor extends Component {
   constructor(props) {
