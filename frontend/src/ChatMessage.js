@@ -15,11 +15,11 @@ class ChatMessage extends Component {
 
     return (
       <Comment>
-       <Comment.Avatar style={{width: '20%'}} src={avatar} />
+       <Comment.Avatar src={avatar} />
         <Comment.Content>
           <Comment.Author as='a'>{author}</Comment.Author>
           <Comment.Metadata>
-            <div>Today at {message.date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })}</div>
+            <div>Today at {message.date.toLocaleTimeString()}</div>
           </Comment.Metadata>
           <Comment.Text>{message.text}</Comment.Text>
         </Comment.Content>
