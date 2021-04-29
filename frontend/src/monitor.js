@@ -41,7 +41,7 @@ export class Monitor extends Component {
       ],
     };
     this.images = [];
-    this.debounced_reply = debounce(this.reply, 2000, { maxWait: 10000 });
+    this.debounced_reply = debounce(this.reply, 3000, { maxWait: 10000 });
   }
 
   handleInput = (input) => {
@@ -91,7 +91,7 @@ export class Monitor extends Component {
                   });
                 });
             });
-          }, 3000);
+          }, 2000);
       } catch (e) {
         if (operation.retry(e)) {
           return;
@@ -186,7 +186,7 @@ export class Monitor extends Component {
         </div>
         <div class="col-sm-1"></div>
         <div
-          class="col-sm-3 pt-4 d-flex justify-content-center"
+          class="col-sm-3"
           id="right-panel"
         >
           <Carousel>

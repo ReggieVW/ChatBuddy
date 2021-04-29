@@ -12,14 +12,6 @@ video{
     float:left;
 }
 
-.video_emotion_detection{
-	width: 440px;
-	height: 440px;
-	float: right;
-	margin: 20px;
-	padding: 20px;
-}
-
 #bottom-panel {
   position: absolute;
   padding-right: 50px;
@@ -31,7 +23,7 @@ video{
 
 #right-panel {
   position: absolute;
-  padding: 0px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
   top: 0;
   right: 0;
 }
