@@ -70,7 +70,7 @@ export class Monitor extends Component {
       console.log("sending request: ", currentAttempt, " attempt");
       try {
         axios
-          .post("http://localhost:5000/add_emotion_image", {
+          .post("http://localhost:5000/upload_emotion_image", {
             image64: image64,
             profilename: profilename,
           })
