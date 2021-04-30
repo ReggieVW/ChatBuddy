@@ -76,7 +76,7 @@ def verification():
         return json.dumps({"identity": 0})
     return json.dumps({"identity": str(name)})
     
-@app.route('/add_emotion_image', methods=['POST'])
+@app.route('/upload_emotion_image', methods=['POST'])
 def add_emotion_image():
         img_name = ""
         img_data = request.get_json()['image64']
@@ -101,7 +101,7 @@ def add_emotion_image():
         #os.remove(path)
     
 @app.route('/get_emotion_image')
-def get_emotion_image_path():
+def get_emotion_image():
     print("get_emotion_image_path:")
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
