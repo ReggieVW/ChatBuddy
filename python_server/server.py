@@ -13,7 +13,7 @@ import base64
 from datetime import datetime
 from camera import VideoCamera
 from face_encoding.encoding_scan_pickle import FaceEncodingPickle
-from sentiment_transformer import SentimentImage
+from facial_sentiment.sentiment_transformer import SentimentImage
 import urllib
 import io
 from datetime import datetime
