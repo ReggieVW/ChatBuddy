@@ -1,4 +1,3 @@
-# Import all the necessary files!
 import os
 import time
 import tensorflow as tf
@@ -11,9 +10,10 @@ import numpy as np
 from flask_cors import CORS
 import base64
 from datetime import datetime
-from camera import VideoCamera
+#from camera import VideoCamera
 from face_encoding.encoding_scan_pickle import FaceEncodingPickle
 from facial_sentiment.sentiment_transformer import SentimentImage
+from eliza.eliza import Eliza
 import urllib
 import io
 from datetime import datetime
@@ -27,6 +27,7 @@ CORS(app)
 
 @app.route('/register', methods=['POST'])
 def register():
+    print("register:")
     try:
         username = request.get_json()['username']
         img_data = request.get_json()['image64']
@@ -78,28 +79,25 @@ def verification():
     
 @app.route('/upload_emotion_image', methods=['POST'])
 def add_emotion_image():
-        img_name = ""
-        img_data = request.get_json()['image64']
-        profilename = request.get_json()['profilename']
-        img_name = str(int(datetime.timestamp(datetime.now())))
-        directory = './images/'+str(profilename)+'/'
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        with open(directory+'/'+img_name+'.jpg', "wb") as fh:
-            fh.write(base64.b64decode(img_data[22:]))
-        path = directory+'/'+img_name+'.jpg'
-        img = cv2.imread(path)
-        transformed_img = SentimentImage.transform(img)
-        path_transformed = directory+'/'+img_name+'_pred.jpg'
-        cv2.imwrite(path_transformed, img)
-        print("written file "+ path_transformed)
-        os.remove(path)
-        return json.dumps({"executed": str("OK")})
-        # Filename
-        # Using cv2.imwrite() method
-        # Saving the image
-        #os.remove(path)
-    
+    print("add_emotion_image:")
+    img_name = ""
+    img_data = request.get_json()['image64']
+    profilename = request.get_json()['profilename']
+    img_name = str(int(datetime.timestamp(datetime.now())))
+    directory = './images/'+str(profilename)+'/'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    with open(directory+'/'+img_name+'.jpg', "wb") as fh:
+        fh.write(base64.b64decode(img_data[22:]))
+    path = directory+'/'+img_name+'.jpg'
+    img = cv2.imread(path)
+    transformed_img = SentimentImage.transform(img)
+    path_transformed = directory+'/'+img_name+'_pred.jpg'
+    cv2.imwrite(path_transformed, img)
+    print("written file "+ path_transformed)
+    os.remove(path)
+    return json.dumps({"uploaded": str("OK")})
+
 @app.route('/get_emotion_image')
 def get_emotion_image():
     print("get_emotion_image_path:")
@@ -122,27 +120,37 @@ def get_emotion_image():
     print("Current Time =", current_time)
     return response 
     
-@app.route('/test')
-def test():
+@app.route('/response_eliza')
+def response_eliza():
+    print("response_eliza:")
+    eliza = Eliza()
+    sent = request.args.get('sent')
+    print("sent: "+sent)
+    eliza.load('eliza/doctor.txt')
+    output = eliza.respond(sent)
+    print("output: "+output)
+    return json.dumps({"output": str(output)})
+    
+@app.route('/time')
+def time():
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     print("Current Time =", current_time)
-    return json.dumps({"executed": str(current_time)})
+    return json.dumps({"time": str(current_time)})
     
-@app.route('/video_feed')
-def video_feed():
-    print("video_feed")
-    cam = VideoCamera()
-    return Response(gen(cam),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+#@app.route('/video_feed')
+#def video_feed():
+#    print("video_feed")
+#    cam = VideoCamera()
+#    return Response(gen(cam),
+#                    mimetype='multipart/x-mixed-replace; boundary=frame')
                                               
-
                     
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+#def gen(camera):
+#    while True:
+#        frame = camera.get_frame()
+#        yield (b'--frame\r\n'
+#               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 if __name__ == "__main__":
     app.run(debug=True)
