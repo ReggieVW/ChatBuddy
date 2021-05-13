@@ -11,7 +11,6 @@ import "./css/carousel.css";
 import { Carousel } from "react-responsive-carousel";
 import ChatHistory from "./ChatHistory";
 import ChatInput from "./ChatInput";
-
 let video;
 const axios = require("axios");
 const retry = require("retry");
@@ -27,7 +26,7 @@ const operation = retry.operation({
 export class Monitor extends Component {
   constructor(props) {
     super(props);
-    this.outside = [];
+    this.objectURL = [];
     this.eliza = new ElizaBot();
     this.state = {
       images: [],
@@ -40,6 +39,7 @@ export class Monitor extends Component {
         },
       ],
     };
+	this.myRef = React.createRef()
     this.images = [];
     this.debounced_reply = debounce(this.reply, 3000, { maxWait: 10000 });
   }
@@ -75,7 +75,7 @@ export class Monitor extends Component {
             profilename: profilename,
           })
           .then((response) => response)
-          .then((json) => {
+          .then((data) => {
             setTimeout(() => {
               fetch(
                 "/get_emotion_image?profilename=" +
@@ -85,9 +85,9 @@ export class Monitor extends Component {
               )
                 .then((response) => response.blob())
                 .then((image) => {
-                  this.outside = URL.createObjectURL(image);
+                  this.objectURL = URL.createObjectURL(image);
                   this.state.images.push({
-                    data: this.outside,
+                    data: this.objectURL,
                   });
                 });
             });
@@ -117,14 +117,22 @@ export class Monitor extends Component {
     }
     if (unreplied.length === 0) return;
     let response = this.eliza.transform(unreplied.join(" "));
-    messages.push({
-      user: false,
-      text: this.fixup(response),
-      date: new Date(),
-    });
-    this.setState({
-      messages,
-    });
+	fetch("/response_eliza?sent=" + unreplied.join(" ") + "&currenttime=" + Date().toLocaleString())
+                .then(res => res.json()).then(data => {
+					console.log("data: ", data);
+				messages.push({
+						user: false,
+						text: this.fixup(data.output),
+						date: new Date(),
+						});
+					this.setState({
+						messages,
+					});	
+                });
+					
+	if(this.myRef.current){
+		this.myRef.current.scrollIntoView(true);
+	}
   };
 
   setup(p5 = "", canvasParentRef = "") {
@@ -179,7 +187,9 @@ export class Monitor extends Component {
             <Segment style={{ overflow: "auto", maxHeight: 600 }}>
               <Comment.Group>
                 <ChatHistory messages={this.state.messages} />
-                <ChatInput inputHandler={this.handleInput} />
+				<div ref={this.myRef}>
+					<ChatInput inputHandler={this.handleInput} />
+				</div>
               </Comment.Group>
             </Segment>
           </Segment>
@@ -200,15 +210,17 @@ export class Monitor extends Component {
             })}
           </Carousel>
         </div>
-        <div class="col-sm-2 text-center" id="bottom-panel">
-          <button
-            onClick={this.logout.bind(this)}
-            className="login100-form-btn pt-100 fixed-bottom"
-          >
-            Back Home
-          </button>
-        </div>
-      </div>
+		<div class="row">
+			<div class="col-sm-2 text-center" id="bottom-panel">
+				<button
+				onClick={this.logout.bind(this)}
+				className="login100-form-btn pt-100 fixed-bottom"
+				>
+				Back Home
+				</button>
+			</div>
+		</div>
+	  </div>
     );
   }
 }
