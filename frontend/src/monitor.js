@@ -70,7 +70,7 @@ export class Monitor extends Component {
       console.log("sending request: ", currentAttempt, " attempt");
       try {
         axios
-          .post("http://localhost:5000/upload_emotion_image", {
+          .post("http://localhost:5000/uploadEmotionImage", {
             image64: image64,
             profilename: profilename,
           })
@@ -78,10 +78,8 @@ export class Monitor extends Component {
           .then((data) => {
             setTimeout(() => {
               fetch(
-                "/get_emotion_image?profilename=" +
-                  this.props.profilename +
-                  "&currenttime=" +
-                  Date().toLocaleString()
+                "/getEmotionImage?profilename=" +
+                  this.props.profilename
               )
                 .then((response) => response.blob())
                 .then((image) => {
@@ -117,12 +115,12 @@ export class Monitor extends Component {
     }
     if (unreplied.length === 0) return;
     let response = this.eliza.transform(unreplied.join(" "));
-	fetch("/response_eliza?sent=" + unreplied.join(" ") + "&currenttime=" + Date().toLocaleString())
+	fetch("http://localhost:5000/chatEliza?message=" + unreplied.join(" "))
                 .then(res => res.json()).then(data => {
 					console.log("data: ", data);
 				messages.push({
 						user: false,
-						text: this.fixup(data.output),
+						text: this.fixup(data.response),
 						date: new Date(),
 						});
 					this.setState({
