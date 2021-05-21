@@ -9,7 +9,7 @@ from datetime import datetime
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
 #load weights
-model =load_model(r'facial_sentiment/Emotion_face.h5')
+model =load_model(r'face_sentiment/Emotion_face.h5')
 
 class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
 

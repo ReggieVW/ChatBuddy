@@ -77,9 +77,9 @@ def verification():
         return json.dumps({"identity": 0})
     return json.dumps({"identity": str(name)})
     
-@app.route('/upload_emotion_image', methods=['POST'])
-def add_emotion_image():
-    print("add_emotion_image:")
+@app.route('/uploadEmotionImage', methods=['POST'])
+def upload_emotion_image():
+    print("upload_emotion_image:")
     img_name = ""
     img_data = request.get_json()['image64']
     profilename = request.get_json()['profilename']
@@ -98,7 +98,7 @@ def add_emotion_image():
     os.remove(path)
     return json.dumps({"uploaded": str("OK")})
 
-@app.route('/get_emotion_image')
+@app.route('/getEmotionImage')
 def get_emotion_image():
     print("get_emotion_image_path:")
     now = datetime.now()
@@ -120,16 +120,21 @@ def get_emotion_image():
     print("Current Time =", current_time)
     return response 
     
-@app.route('/response_eliza')
-def response_eliza():
-    print("response_eliza:")
+@app.route('/chatEliza')
+def chat_eliza():
+    print("chatEliza:")
     eliza = Eliza()
-    sent = request.args.get('sent')
-    print("sent: "+sent)
+    message = request.args.get('message')
     eliza.load('eliza/doctor.txt')
-    output = eliza.respond(sent)
-    print("output: "+output)
-    return json.dumps({"output": str(output)})
+    if(message):
+        output = eliza.respond(message)
+    else:
+        output = eliza.initial()
+    print("message: "+output)
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    data = {"response": str(output), "time":dt_string}
+    return json.dumps(data)
     
 @app.route('/time')
 def time():
