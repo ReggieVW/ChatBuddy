@@ -64,7 +64,7 @@ def verification():
     print("verify:")
     img_data = request.get_json()['image64']
     img_name = str(int(datetime.timestamp(datetime.now())))
-    directory = '../images'
+    directory = './images'
     if not os.path.exists(directory):
         os.makedirs(directory)
     with open(directory+'/'+img_name+'.jpg', "wb") as fh:
@@ -93,17 +93,14 @@ def upload_emotion_image():
     img = cv2.imread(path)
     transformed_img = SentimentImage.transform(img)
     path_transformed = directory+'/'+img_name+'_pred.jpg'
-    cv2.imwrite(path_transformed, img)
+    cv2.imwrite(path_transformed, transformed_img)
     print("written file "+ path_transformed)
     os.remove(path)
     return json.dumps({"uploaded": str("OK")})
 
 @app.route('/getEmotionImage')
 def get_emotion_image():
-    print("get_emotion_image_path:")
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    print("Current Time =", current_time)
+    print("getEmotionImage:")
     profile_name = request.args.get('profilename')
     directory = './images/'+str(profile_name)+'/'
     list_of_files = glob.glob(directory+'/*pred.jpg') 
@@ -115,9 +112,6 @@ def get_emotion_image():
     byte_io.seek(0)
     response = make_response(send_file(byte_io,mimetype='image/jpg'))
     response.headers['Content-Transfer-Encoding']='base64'
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    print("Current Time =", current_time)
     return response 
     
 @app.route('/chatEliza')
@@ -158,4 +152,4 @@ def time():
 #               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

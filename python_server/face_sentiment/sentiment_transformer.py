@@ -9,7 +9,10 @@ from datetime import datetime
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
 #load weights
-model =load_model(r'face_sentiment/Emotion_face.h5')
+try:
+    model =load_model(r'face_sentiment/Emotion_face.h5')
+except:
+    model =load_model(r'Emotion_face.h5')
 
 class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
@@ -17,6 +20,9 @@ class SentimentImage:
     def transform(img):
         gray= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces_detected = face_haar_cascade.detectMultiScale(gray, 1.32, 5)
+        print("face detected= "+ str(faces_detected))
+        if len(faces_detected) == 0:
+            cv2.putText(img,"No face detected",(50,50),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
         if len(faces_detected) != 0:
             for (x, y, w, h) in faces_detected:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),thickness=1)
@@ -30,7 +36,6 @@ class SentimentImage:
 
                     # make a prediction on the ROI, then lookup the class
                     preds = model.predict(roi)[0]
-                    print(preds)
                     label=class_labels[preds.argmax()]
                     label_position = (x,y)
                     now = datetime.now()
@@ -41,14 +46,13 @@ class SentimentImage:
                     cv2.putText(img,"Neutral : " + "{0:.0%}".format(preds[2]),(x-200,y+110),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Sad : " + "{0:.0%}".format(preds[3]),(x-200,y+140),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Surprise : " + "{0:.0%}".format(preds[4]),(x-200,y+170),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
-                    print("Sentiments added")
                     #cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
         return img
 
-#img = cv2.imread("1618836507.jpg")
+#img = cv2.imread("1622296082_pred.jpg")
 #transformed_img = SentimentImage.transform(img)
 # Filename
-#"filename = 'savedImage.jpg'
-# Using cv2.imwrite() method
+#filename = 'savedImage.jpg'
+#Using cv2.imwrite() method
 # Saving the image
 #cv2.imwrite(filename, img)
