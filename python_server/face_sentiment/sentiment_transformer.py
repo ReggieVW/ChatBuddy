@@ -55,4 +55,4 @@ class SentimentImage:
 #filename = 'savedImage.jpg'
 #Using cv2.imwrite() method
 # Saving the image
-#cv2.imwrite(filename, img)
+#cv2.imwrite(filename, transformed_img)

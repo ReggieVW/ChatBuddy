@@ -13,6 +13,7 @@ from datetime import datetime
 #from camera import VideoCamera
 from face_encoding.encoding_scan_pickle import FaceEncodingPickle
 from face_sentiment.sentiment_transformer import SentimentImage
+from nlp.sentiment_transformer import SentimentNlp
 from eliza.eliza import Eliza
 import urllib
 import io
@@ -98,7 +99,7 @@ def upload_emotion_image():
     os.remove(path)
     return json.dumps({"uploaded": str("OK")})
 
-@app.route('/getEmotionImage')
+@app.route('/getEmotionImages')
 def get_emotion_image():
     print("getEmotionImage:")
     profile_name = request.args.get('profilename')
@@ -118,7 +119,7 @@ def get_emotion_image():
 def chat_eliza():
     print("chatEliza:")
     eliza = Eliza()
-    message = request.args.get('message')
+    message = request.args.get('chatMessage')
     eliza.load('eliza/doctor.txt')
     if(message):
         output = eliza.respond(message)
@@ -129,6 +130,19 @@ def chat_eliza():
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     data = {"response": str(output), "time":dt_string}
     return json.dumps(data)
+    
+@app.route('/analyzeSentimentText')
+def analyze_sentiment_text():
+    print("analyzeSentimentText:")
+    if request.args.get('text') is None:
+        return json.dumps({"error": "Mandatory parameter missing"})
+    sent = request.args.get('text')
+    print("text: "+sent)
+    sentimentNlp = SentimentNlp()
+    label, pred = sentimentNlp.predict(sent)
+    print("label: "+label)
+    print("pred: "+pred)
+    return json.dumps({"label": str(label) + " ("+str(pred) + ")"})
     
 @app.route('/time')
 def time():
@@ -152,4 +166,4 @@ def time():
 #               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=False, threaded=True)
