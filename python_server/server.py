@@ -44,8 +44,7 @@ def register():
         faces_detected = face_haar_cascade.detectMultiScale(gray, 1.32, 5)
         if len(faces_detected) == 0:
             print("no face detected")
-            data = {"register": 0, "status":204}
-            return json.dumps(data)
+            return 'no face detected', 204
         if not os.path.exists("../known_faces"):
             os.makedirs("../known_faces")
         faceRecog = FaceEncodingPickle("../known_faces")
@@ -53,7 +52,7 @@ def register():
         os.remove(path)   
         return json.dumps({"register": str("OK")})
     except:
-        return json.dumps({"status": 500})
+        return 'error', 500
 
 def check_user_exist(image):
     faceRecog = FaceEncodingPickle("../known_faces")
@@ -75,7 +74,8 @@ def verification():
     name = check_user_exist(image)
     os.remove(path)
     if name == "unknown":
-        return json.dumps({"identity": 0})
+        print("unknown face")
+        return 'unknown face', 204
     return json.dumps({"identity": str(name)})
     
 @app.route('/uploadEmotionImage', methods=['POST'])
