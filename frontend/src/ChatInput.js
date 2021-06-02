@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Icon } from 'semantic-ui-react';
+import Dictaphone from "./Dictaphone";
 
 class ChatInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: '',
+	  message: "",
     };
   }
 
@@ -31,9 +33,15 @@ class ChatInput extends Component {
   handleClick = () => {
     this.handleInput();
   }
+  
+  callbackFunction = (childData) => {
+      this.setState({value: childData})
+}
 
   render() {
     return (
+		<div>
+	  <Dictaphone parentCallback = {this.callbackFunction}/>
       <Input
         className="chatInput"
         onChange={this.handleChange}
@@ -42,6 +50,7 @@ class ChatInput extends Component {
         placeholder='Write to ChatBuddy...'
         value={this.state.value}
       />
+	   </div>
     );
   }
 }

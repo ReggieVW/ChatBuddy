@@ -11,6 +11,7 @@ import "./css/carousel.css";
 import { Carousel } from "react-responsive-carousel";
 import ChatHistory from "./ChatHistory";
 import ChatInput from "./ChatInput";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 let video;
 const axios = require("axios");
 const retry = require("retry");
@@ -30,6 +31,12 @@ export class Monitor extends Component {
     this.eliza = new ElizaBot();
     this.state = {
       images: [],
+	  text_sentiments: [
+		{
+          text: null,
+          sentiment: null,
+        },
+	  ],
       messages: [
         {
           user: false,
@@ -41,17 +48,19 @@ export class Monitor extends Component {
     };
 	this.myRef = React.createRef()
     this.images = [];
-    this.debounced_reply = debounce(this.reply, 3000, { maxWait: 10000 });
+	this.text_sentiments = [];
+    this.debounced_reply = debounce(this.reply, 4000, { maxWait: 10000 });
   }
 
   handleInput = (input) => {
     input = input.trim();
+	let current_date = new Date();
     if (!input) return;
     const messages = this.state.messages.slice(0);
     messages.push({
       user: true,
       text: input,
-      date: new Date(),
+      date: current_date,
     });
 
     video.loadPixels();
@@ -65,6 +74,16 @@ export class Monitor extends Component {
       },
       body: JSON.stringify(data),
     };
+	
+			fetch("http://localhost:5000/analyzeSentimentText?text=" + input)
+                .then(res => res.json()).then(data => {
+					console.log("data: ", data);
+				this.state.text_sentiments.push({
+						text: input,
+						sentiment: data.label,
+						date: current_date.toLocaleString(),
+						});
+				 });
 
     operation.attempt(async (currentAttempt) => {
       console.log("sending request: ", currentAttempt, " attempt");
@@ -76,30 +95,35 @@ export class Monitor extends Component {
           })
           .then((response) => response)
           .then((data) => {
-            setTimeout(() => {
-              fetch(
-                "/getEmotionImage?profilename=" +
-                  this.props.profilename
-              )
-                .then((response) => response.blob())
-                .then((image) => {
-                  this.objectURL = URL.createObjectURL(image);
-                  this.state.images.push({
-                    data: this.objectURL,
-                  });
-                });
-            });
-          }, 2000);
+          });
       } catch (e) {
         if (operation.retry(e)) {
           return;
         }
       }
     });
+	setTimeout(() => {
+              fetch(
+                "/getEmotionImages?profilename=" +
+                  this.props.profilename +
+                  "&currenttime=" +
+                  current_date.toLocaleString()
+              )
+                .then((response) => response.blob())
+                .then((image) => {
+                  this.state.images.push({
+                    data: URL.createObjectURL(image),
+					date: current_date.toLocaleString(),
+                  });
+                });
+				}, 2000);
+
+
 
     this.setState({
       messages,
       images: this.images,
+	  text_sentiments : this.text_sentiments,
     });
 
     this.debounced_reply();
@@ -115,7 +139,7 @@ export class Monitor extends Component {
     }
     if (unreplied.length === 0) return;
     let response = this.eliza.transform(unreplied.join(" "));
-	fetch("http://localhost:5000/chatEliza?message=" + unreplied.join(" "))
+	fetch("http://localhost:5000/chatEliza?chatMessage=" + unreplied.join(" "))
                 .then(res => res.json()).then(data => {
 					console.log("data: ", data);
 				messages.push({
@@ -134,19 +158,21 @@ export class Monitor extends Component {
   };
 
   setup(p5 = "", canvasParentRef = "") {
-    p5.noCanvas();
-    video = p5.createCapture(p5.VIDEO);
-    const v = document.querySelector("video");
-    let st =
-      "position: absolute; top: 40px; left:5px; display: block; height: 250px; width: 250px; border-radius: 50%;";
-    v.setAttribute("style", st);
+		p5.noCanvas();
+		video = p5.createCapture(p5.VIDEO);
+		const v = document.querySelector("video");
+		let st =
+		"position: absolute; top: 40px; left:5px; display: block; height: 250px; width: 250px; border-radius: 50%;";
+		v.setAttribute("style", st);
   }
 
   stop() {
-    const tracks = document.querySelector("video").srcObject.getTracks();
-    tracks.forEach(function (track) {
-      track.stop();
-    });
+	if(document.querySelector("video").srcObject != null){
+		const tracks = document.querySelector("video").srcObject.getTracks();
+		tracks.forEach(function (track) {
+		track.stop();
+		});
+	}
   }
 
   fixup(text) {
@@ -161,8 +187,8 @@ export class Monitor extends Component {
 
   render() {
     return (
-      <div class="row">
-        <div class="col-sm-2">
+      <div class="row" id="divheight">
+        <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
@@ -174,15 +200,14 @@ export class Monitor extends Component {
             </div>
           </div>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-5">
+        <div class="col-sm-5"  style={{ overflow: "auto", maxHeight: 600 }}>
           <Segment>
             <Segment>
               <Header as="h3" block>
                 Chat with our Chatbuddy
               </Header>
             </Segment>
-            <Segment style={{ overflow: "auto", maxHeight: 600 }}>
+            <Segment>
               <Comment.Group>
                 <ChatHistory messages={this.state.messages} />
 				<div ref={this.myRef}>
@@ -192,10 +217,13 @@ export class Monitor extends Component {
             </Segment>
           </Segment>
         </div>
-        <div class="col-sm-1"></div>
+		<div
+          class="col-sm-1"
+          
+        ></div>
         <div
           class="col-sm-3"
-          id="right-panel"
+          
         >
           <Carousel>
             {this.state.images.map((subItems) => {
@@ -207,6 +235,24 @@ export class Monitor extends Component {
               );
             })}
           </Carousel>
+		     <Carousel>
+            {
+				
+				this.state.text_sentiments.map((subItems) => {
+              return (<div>
+			  				{
+				subItems.sentiment!= null?
+                <div id="my-slide">
+				  <h1>{subItems.sentiment}</h1>
+				  <blockquote id="blockquote">{subItems.text}</blockquote>
+                  <p className="legend">{subItems.date}</p>
+                </div>
+			:<div></div>}</div>);
+            })
+				
+			}
+          </Carousel>
+		  
         </div>
 		<div class="row">
 			<div class="col-sm-2 text-center" id="bottom-panel">
@@ -217,6 +263,13 @@ export class Monitor extends Component {
 				Back Home
 				</button>
 			</div>
+			        <div
+          class="col-sm-10"
+       
+        >
+      
+		  
+        </div>
 		</div>
 	  </div>
     );

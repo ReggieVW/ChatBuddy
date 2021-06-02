@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Comment } from 'semantic-ui-react';
-import robotAvatar from './robot.svg';
+import robotAvatar from './goldfish.svg';
 import humanAvatar from './human.svg';
 
 class ChatMessage extends Component {
