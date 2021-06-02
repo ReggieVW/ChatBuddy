@@ -38,10 +38,12 @@ export class Signup extends Component {
           const response = await axios.post('http://localhost:5000/register', {'image64':image64, 'username':usernameid});
 		  console.log(response);
           if(response.data.register){
-		  		const tracks = document.querySelector("video").srcObject.getTracks();
-		  		tracks.forEach(function(track) {
-    				track.stop();
-  				});
+			  	if(document.querySelector("video").srcObject != null){
+					const tracks = document.querySelector("video").srcObject.getTracks();
+					tracks.forEach(function(track) {
+						track.stop();
+					});
+				}
 		  	}else {
 				alert("No face detected!")
 			} 
@@ -50,10 +52,12 @@ export class Signup extends Component {
         );
     }
     logout(){
-    	const tracks = document.querySelector("video").srcObject.getTracks();
-		  	tracks.forEach(function(track) {
-    				track.stop();
-  			});
+		if(document.querySelector("video").srcObject != null){
+			const tracks = document.querySelector("video").srcObject.getTracks();
+				tracks.forEach(function(track) {
+						track.stop();
+			});
+		}
     	this.props.backhome();
     }
 
@@ -67,9 +71,6 @@ export class Signup extends Component {
 									<span className="login100-form-title p-b-53">
 										Sign Up
 									</span>
-
-								
-									
 																
 									<div className="p-t-31 p-b-9">
 										<span className="txt1">
@@ -83,7 +84,6 @@ export class Signup extends Component {
 									<br/><br/>
 									<br/><br/>
 
-									<input/>
 									<br/><br/>
 									<br/><br/>
 									<br/><br/>

@@ -27,10 +27,12 @@ export class Verify extends Component {
     }
 
     stop(){
-    	const tracks = document.querySelector("video").srcObject.getTracks();
+		if(document.querySelector("video").srcObject != null){
+			const tracks = document.querySelector("video").srcObject.getTracks();
 		  	tracks.forEach(function(track) {
     				track.stop();
   			});
+		}
     }
 
     logout(){
@@ -79,7 +81,6 @@ export class Verify extends Component {
 									<span className="login100-form-title p-b-53">
 										Sign In
 									</span>
-									<input/>
 									<br/><br/>
 									<br/><br/>
 									<br/><br/>
@@ -108,7 +109,7 @@ export class Verify extends Component {
 							</div>
 						</div>
 					</div>
-					<div id="dropDownSelect1"></div></div>
+				</div>
 		)
 
 

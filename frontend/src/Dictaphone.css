@@ -1,0 +1,79 @@
+
+.mircophone-container {
+	float:right;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  width: 20vw;
+  height: 5vh;
+}
+.microphone-icon-container {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin-top: 5px;
+  position: relative;
+  cursor: pointer;
+}
+.microphone-icon-container.listening::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff81;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  transform:translate(-50%, -50%) scale(1.4);
+  border-radius: 20%;
+  animation: listening infinite 1.5s;
+}
+@keyframes listening{
+  0%{
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+.microphone-icon {
+  width: 80%;
+  height: 80%;
+}
+.microphone-status {
+  font-size: 11px;
+  margin-right: 10px;
+  min-width: 215px;
+}
+.btn {
+  border: none;
+  padding: 10px;
+  margin-right: 5px;
+  outline: none;
+  cursor: pointer;
+  font-size: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 5px #888888;
+}
+.microphone-result-container {
+  text-align: center;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0px;
+
+}
+.microphone-result-text {
+  margin-bottom: 0px;
+  width: 70vw;
+  overflow-y: auto;
+}
+.microphone-reset {
+  border: 1px solid #fff;
+  background: none;
+  color: white;
+  width: fit-content;
+}
