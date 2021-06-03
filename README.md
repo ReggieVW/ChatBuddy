@@ -76,7 +76,7 @@ pip install mediapipe
  </p>
 
 
-# Usage Python script:
+# Server Python script:
 To run the server
  <code>
  python server.py
@@ -84,6 +84,39 @@ To run the server
  </p>
 
  
- # Dataset:
- Kaggle dataset for emotion detection
+ # Dataset Face Sentiment:
+ 
+For emotion detection the Kaggle dataset is used. This dataset can be used to detect 5 facial emotions as listed below:
+'angry': 0, 'happy': 1, 'neutral': 2, 'sad': 3, 'surprise': 4
  https://www.kaggle.com/jonathanoheix/face-expression-recognition-dataset
+![image](https://user-images.githubusercontent.com/35894891/120637921-c4f90480-c46f-11eb-849f-fdec1e220af9.png)
+</br>
+![image](https://user-images.githubusercontent.com/35894891/120635837-308da280-c46d-11eb-9725-ecef418a7513.png)
+</br>
+ Web scraping is used for more specific images using Selenium.
+
+1) Launch chrome browser:
+2) Enter specific term in google image search box
+3) Find (scroll to) the image and click
+4) Extract the link from the image popup
+5) Save image to destination
+6) Exclude: count faces != 1
+7) Convert to grayscale and use same dimensions as Kaggle dataset
+ <code>
+ cd utils
+ </code>
+ </br>
+  <code>
+python scrapper_main.py
+ </code>
+ </br>
+  <code>
+python remove_multiple_faces.py
+ </code>
+ </br>
+  <code>
+python resize_images.py
+ </code>
+ </br>
+ ![image](https://user-images.githubusercontent.com/35894891/120638574-9596c780-c470-11eb-8e76-5f190bd3d792.png)
+
