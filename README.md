@@ -2,64 +2,9 @@
 ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
 It integrates video processing, sound processing & chat to interact with the user. 
 
-# Dependencies Python
-<code>
-pip install numpy
-</code>
-</p>
-<code>
-pip install opencv-python
-</code>
-</p>
-<code>
-pip install keras
-</code>
-</p>
-<code>
-pip install pandas
-</code>
-<code>
-</p>
-pip install tensorflow
-</code>
-TensorFlow is now (3/21) supported on the following 64-bit systems: Python 3.5–3.8.
-</p>
-<p>
-<code>
-pip install Pillow
- </code>
-</p>
-<p>
-<code>
-pip install flask
- </code>
-</p>
-<p>
-<code>
-pip install flask_cors
- </code>
-</p>
-<p>
-<code>
-pip install cMake
- </code>
-  Install Visual Studio with C++ compiler.
-</p>
-<p>
-<code>
-pip install face_recognition
- </code>
-</p>
-<p>
-<code>
-pip install imutils
- </code>
- </p>
-<p>
- <code>
-pip install mediapipe
-</code>
-</p>
+# System Overview
+![image](https://user-images.githubusercontent.com/35894891/120652369-01346100-c480-11eb-95cf-047b5bf425fe.png)
+
 
 # Frontend React
 <p>
@@ -74,6 +19,26 @@ pip install mediapipe
  </code>
  Runs the web app on http://localhost:3000/
  </p>
+ 
+ # Dependencies Python
+ <code>
+  pip install -r requirements.txt 
+  </code>
+  
+  dependencies:
+  
+  - numpy </br>
+  - opencv-python</br>
+  - keras</br>
+  - pandas</br>
+  - tensorflow (TensorFlow is now 3/21 supported on the following 64-bit systems: Python 3.5–3.8)</br>
+  - Pillow</br>
+  - flask</br>
+  - flask_cors</br>
+  - cMake (Install Visual Studio with C++ compiler)</br>
+  - face_recognition</br>
+  - imutils</br>
+  - mediapipe</br>
 
 
 # Server Python 
@@ -105,18 +70,23 @@ For emotion detection the Kaggle dataset is used. This dataset we use to detect 
  <code>
  cd utils
  </code>
+ (cmd) 
  </br>
+
   <code>
 python scrapper_main.py
  </code>
+ (step 1, 2, 3, 4, 5)
  </br>
   <code>
 python remove_multiple_faces.py
  </code>
+ (step 6)
  </br>
   <code>
 python resize_images.py
  </code>
+ (step 7)
  </br>
  
 ## Face Sentiment Analysis – Training (CNN)
@@ -129,6 +99,7 @@ The validation accuracy starts to stabilize at the end of the 23 epochs between 
  <code>
  cd python_server/face_sentiment
   </code>
+(cmd) 
    </br>
    <code>
 python visual_emotion_training.py
@@ -145,6 +116,7 @@ The implementation of our model on a webcam:
  <code>
  cd python_server/face_sentiment
    </code>
+(cmd) 
    </br>
    <code>
 python visual_emotion_testing.py
@@ -168,6 +140,7 @@ Face recognition process:
  <code>
  cd python_server/face_encoding
    </code>
+(cmd) 
    </br>
    <code>
 python face_recognition_knn_training.py
@@ -178,7 +151,7 @@ python face_recognition_testing.py
  </code>
  </br>
 
-## Eliza 
+## Eliza Chatbot
 
 a) 1964 at MIT Artificial Intelligence Laboratory by Joseph Weizenbaum.
 
@@ -191,6 +164,7 @@ d) Claims passing the Turing Test in the 60's.
  <code>
  cd python_server/eliza
   </code>
+(cmd) 
    </br>
    <code>
 python eliza.py
