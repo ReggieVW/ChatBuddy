@@ -76,7 +76,7 @@ pip install mediapipe
  </p>
 
 
-# Server Python script:
+# Server Python 
 To run the server
  <code>
  python server.py
@@ -84,7 +84,7 @@ To run the server
  </p>
 
  
- # Dataset Face Sentiment:
+ ## Dataset Face Sentiment
  
 For emotion detection the Kaggle dataset is used. This dataset we use to detect 5 facial emotions as listed below:
 'angry': 0, 'happy': 1, 'neutral': 2, 'sad': 3, 'surprise': 4
@@ -119,7 +119,7 @@ python resize_images.py
  </code>
  </br>
  
-# Face Sentiment Analysis – Training (CNN)
+## Face Sentiment Analysis – Training (CNN)
  
 ![image](https://user-images.githubusercontent.com/35894891/120639691-ec50d100-c471-11eb-947e-7a29bdee2ee5.png)
  
@@ -134,7 +134,8 @@ The validation accuracy starts to stabilize at the end of the 23 epochs between 
 python visual_emotion_training.py
  </code>
 
-# Face Sentiment Analysis – Webcam
+## Face Sentiment Analysis – Webcam
+
 The implementation of our model on a webcam:
 1) Take each frame of the video image by image (using OpenCV).
 2) Apply a grayscale filter to reduce inputs.
@@ -147,6 +148,52 @@ The implementation of our model on a webcam:
    </br>
    <code>
 python visual_emotion_testing.py
+ </code>
+ </br>
+ 
+## Face Recognition
+
+Face recognition process:
+1) Capture a face (using Haar feature based cascade classifiers XML)
+2) Create own (small) dataset with faces
+3) Quantify the image dataset
+4) Store encodings
+5) Compare encodings with new face
+6) Use KNN to make the final face classification
+ </br>
+ 
+ ![Afbeelding1](https://user-images.githubusercontent.com/35894891/120645316-929fd500-c478-11eb-8ca0-c6cac8bdf251.jpg)
+
+ </br>
+ <code>
+ cd python_server/face_encoding
+   </code>
+   </br>
+   <code>
+python face_recognition_knn_training.py
+ </code>
+  </br>
+   <code>
+python face_recognition_testing.py
+ </code>
+ </br>
+
+## Eliza 
+
+a) 1964 at MIT Artificial Intelligence Laboratory by Joseph Weizenbaum.
+
+b) Is a therapist chatbot.
+
+c) Using a "pattern matching" and substitution methodology.
+
+d) Claims passing the Turing Test in the 60's.
+
+ <code>
+ cd python_server/eliza
+  </code>
+   </br>
+   <code>
+python eliza.py
  </code>
 
 
