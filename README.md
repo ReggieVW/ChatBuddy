@@ -19,8 +19,15 @@ It integrates video processing, sound processing & chat to interact with the use
  </code>
  Runs the web app on http://localhost:3000/
  </p>
+
+# Server Python 
+To run the server
+ <code>
+ python server.py
+ </code>
+ </p>
  
- # Dependencies Python
+ ## Dependencies Python
  <code>
   pip install -r requirements.txt 
   </code>
@@ -39,14 +46,6 @@ It integrates video processing, sound processing & chat to interact with the use
   - face_recognition</br>
   - imutils</br>
   - mediapipe</br>
-
-
-# Server Python 
-To run the server
- <code>
- python server.py
- </code>
- </p>
 
  
  ## Dataset Face Sentiment
