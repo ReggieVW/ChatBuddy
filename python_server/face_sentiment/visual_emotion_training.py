@@ -8,13 +8,15 @@ import os
 from keras.optimizers import RMSprop,SGD,Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
-num_classes = 6
-img_rows,img_cols = 48,48
+num_classes = 5
+img_rows,img_cols = 48,48 #original size of the image. Each image has a resolution 48x48.
 batch_size = 32
 
-train_data_dir = r'D:\Erasmus\dataset\archive\images\train'
-validation_data_dir = r'D:\Erasmus\dataset\archive\images\validation'
+train_data_dir = r'..\..\images\train'
+validation_data_dir = r'..\..\images\validation'
 
+#Data Augmentation
+#Rescaling, rotation, shear, width range, height range, horizontal flip, zoom, fill
 train_datagen = ImageDataGenerator(
                     rescale=1./255,
                     rotation_range=30,
@@ -43,77 +45,47 @@ validation_generator = validation_datagen.flow_from_directory(
                             class_mode='categorical',
                             shuffle=True)
 
-
+# Modeling
+# Optimizing the model using relu activation function. Doubling the number of kernels as 32, 64, 128, and 256.
+# Initialising the CNN
 model = Sequential()
 
-# Block-1
-
 model.add(Conv2D(32,(3,3),padding='same',kernel_initializer='he_normal',input_shape=(img_rows,img_cols,1)))
-model.add(Activation('elu'))
-model.add(BatchNormalization())
-model.add(Conv2D(32,(3,3),padding='same',kernel_initializer='he_normal',input_shape=(img_rows,img_cols,1)))
-model.add(Activation('elu'))
+model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.2))
-
-# Block-2 
 
 model.add(Conv2D(64,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
-model.add(BatchNormalization())
-model.add(Conv2D(64,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
+model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.2))
-
-# Block-3
 
 model.add(Conv2D(128,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
-model.add(BatchNormalization())
-model.add(Conv2D(128,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
+model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.2))
 
-# Block-4 
-
 model.add(Conv2D(256,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
-model.add(BatchNormalization())
-model.add(Conv2D(256,(3,3),padding='same',kernel_initializer='he_normal'))
-model.add(Activation('elu'))
+model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.2))
-
-# Block-5
 
 model.add(Flatten())
 model.add(Dense(64,kernel_initializer='he_normal'))
-model.add(Activation('elu'))
+model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(Dropout(0.5))
-
-# Block-6
-
-model.add(Dense(64,kernel_initializer='he_normal'))
-model.add(Activation('elu'))
-model.add(BatchNormalization())
-model.add(Dropout(0.5))
-
-# Block-7
 
 model.add(Dense(num_classes,kernel_initializer='he_normal'))
 model.add(Activation('softmax'))
 
 print(model.summary())
 
-
-
+# saving model using ModelCheckpoint, EarlyStopping for avoiding over-fitting, ReduceLROnPlateu for reducing learning rate whenever the validation accuracy plateaus occurs
 checkpoint = ModelCheckpoint('Emotion_face.h5',
                              monitor='val_loss',
                              mode='min',
@@ -135,15 +107,25 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss',
 
 callbacks = [earlystop,checkpoint,reduce_lr]
 
+# compile the model using Adam optimize
 model.compile(loss='categorical_crossentropy',
-              optimizer = Adam(lr=0.001),
+              optimizer = Adam(learning_rate=0.001),
               metrics=['accuracy'])
+              
+nb_train_samples = 0
+for expression in os.listdir(train_data_dir):
+    nb_train_samples += len(os.listdir(train_data_dir + "/" + expression))
+print(nb_train_samples)
 
-nb_train_samples = 24176
-nb_validation_samples = 3006
-epochs=30
+nb_validation_samples = 0
+for expression in os.listdir(validation_data_dir):
+    nb_validation_samples += len(os.listdir(validation_data_dir + "/" + expression))
+print(nb_validation_samples)
 
-history=model.fit_generator(
+epochs=40
+
+# train the model 
+history=model.fit(
                 train_generator,
                 steps_per_epoch=nb_train_samples//batch_size,
                 epochs=epochs,
