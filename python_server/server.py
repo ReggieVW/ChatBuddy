@@ -11,7 +11,7 @@ from flask_cors import CORS
 import base64
 from datetime import datetime
 #from camera import VideoCamera
-from face_encoding.encoding_scan_pickle import FaceEncodingPickle
+import face_encoding.face_recognition_knn_training as faceRecog
 from face_sentiment.sentiment_transformer import SentimentImage
 from nlp.sentiment_transformer import SentimentNlp
 from eliza.eliza import Eliza
@@ -28,12 +28,13 @@ CORS(app)
 
 @app.route('/register', methods=['POST'])
 def register():
-    print("register:")
-    try:
+        print("register:")
+    #try:
         username = request.get_json()['username']
         img_data = request.get_json()['image64']
         img_name = str(int(datetime.timestamp(datetime.now())))
         directory = 'images'
+        directory_train = 'face_encoding\images-train'
         if not os.path.exists(directory):
             os.makedirs(directory)
         with open(directory+'/'+img_name+'.jpg', "wb") as fh:
@@ -45,18 +46,21 @@ def register():
         if len(faces_detected) == 0:
             print("no face detected")
             return 'no face detected', 204
-        if not os.path.exists("../known_faces"):
-            os.makedirs("../known_faces")
-        faceRecog = FaceEncodingPickle("../known_faces")
-        faceRecog.add_image(image, username)
+        if not os.path.exists(directory_train):
+            os.makedirs(directory_train)
+        faceRecog.add_image(directory_train, image, username)
+        faceRecog.train('face_encoding/images-train', "face_encoding/trained_knn_model.clf")
         os.remove(path)   
         return json.dumps({"register": str("OK")})
-    except:
-        return 'error', 500
+    #except:
+     #   return 'error', 500
 
-def check_user_exist(image):
-    faceRecog = FaceEncodingPickle("../known_faces")
-    name = faceRecog.scan_image(image)
+def check_user_exist(imagePath):
+    predictions = faceRecog.predict_face(imagePath, "face_encoding/trained_knn_model.clf")
+    if(predictions):
+        name = predictions[0][0]
+    else:
+        name = "unknown"
     return name
 
 @app.route('/verify', methods=['POST'])
@@ -71,7 +75,7 @@ def verification():
         fh.write(base64.b64decode(img_data[22:]))
     path = directory+'/'+img_name+'.jpg'
     image = cv2.imread(path)
-    name = check_user_exist(image)
+    name = check_user_exist(path)
     os.remove(path)
     if name == "unknown":
         print("unknown face")
