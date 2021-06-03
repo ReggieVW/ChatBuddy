@@ -86,7 +86,7 @@ To run the server
  
  # Dataset Face Sentiment:
  
-For emotion detection the Kaggle dataset is used. This dataset can be used to detect 5 facial emotions as listed below:
+For emotion detection the Kaggle dataset is used. This dataset we use to detect 5 facial emotions as listed below:
 'angry': 0, 'happy': 1, 'neutral': 2, 'sad': 3, 'surprise': 4
  https://www.kaggle.com/jonathanoheix/face-expression-recognition-dataset
 ![image](https://user-images.githubusercontent.com/35894891/120637921-c4f90480-c46f-11eb-849f-fdec1e220af9.png)
@@ -118,5 +118,37 @@ python remove_multiple_faces.py
 python resize_images.py
  </code>
  </br>
- ![image](https://user-images.githubusercontent.com/35894891/120638574-9596c780-c470-11eb-8e76-5f190bd3d792.png)
+ 
+# Face Sentiment Analysis – Training (CNN)
+ 
+![image](https://user-images.githubusercontent.com/35894891/120639691-ec50d100-c471-11eb-947e-7a29bdee2ee5.png)
+ 
+Evaluation accuracy and training loss:
+The validation accuracy starts to stabilize at the end of the 23 epochs between 50% and 60% accuracy.
+
+ <code>
+ cd python_server/face_sentiment
+  </code>
+   </br>
+   <code>
+python visual_emotion_training.py
+ </code>
+
+# Face Sentiment Analysis – Webcam
+The implementation of our model on a webcam:
+1) Take each frame of the video image by image (using OpenCV).
+2) Apply a grayscale filter to reduce inputs.
+3) Reduce pixel density to the same as the trained set.
+4) Detect the face (using haarcascade_frontalface_default.xml).
+5) Use model to predict the emotion of the input (Keras/TensorFlow).
+ <code>
+ cd python_server/face_sentiment
+   </code>
+   </br>
+   <code>
+python visual_emotion_testing.py
+ </code>
+
+
+
 
