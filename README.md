@@ -1,6 +1,5 @@
 # ChatBuddy
 ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
-It integrates video processing, sound processing & chat to interact with the user. 
 
 # System Overview
 ![image](https://user-images.githubusercontent.com/35894891/120652369-01346100-c480-11eb-95cf-047b5bf425fe.png)
