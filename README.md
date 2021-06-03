@@ -66,7 +66,7 @@ For emotion detection the Kaggle dataset is used. This dataset we use to detect 
 6) Exclude: count faces != 1
 7) Convert to grayscale and use same dimensions as Kaggle dataset
  <code>
- cd utils
+ cd python_server/utils
  </code>
  (cmd) 
  </br>
