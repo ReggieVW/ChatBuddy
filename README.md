@@ -20,7 +20,7 @@ ChatBuddy uses artificial intelligence to contribute to the well-being of the el
  </p>
 
 # Server Python 
-To run the server
+To run the server on http://localhost:5000/
  <code>
  python server.py
  </code>
