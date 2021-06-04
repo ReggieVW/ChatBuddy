@@ -153,9 +153,9 @@ python face_recognition_testing.py
 
 a) 1964 at MIT Artificial Intelligence Laboratory by Joseph Weizenbaum.
 
-b) Is a therapist chatbot.
+b) A therapist chatbot.
 
-c) Using a "pattern matching" and substitution methodology.
+c) Uses a "pattern matching" and substitution methodology.
 
 d) Claims passing the Turing Test in the 60's.
 
