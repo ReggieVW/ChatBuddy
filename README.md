@@ -89,10 +89,10 @@ python resize_images.py
  
 ## Face Sentiment Analysis – Training (CNN)
  
-![image](https://user-images.githubusercontent.com/35894891/120639691-ec50d100-c471-11eb-947e-7a29bdee2ee5.png)
+![image](https://user-images.githubusercontent.com/35894891/120776271-5629b300-c524-11eb-80c0-7869df8434d3.png)
  
 Evaluation accuracy and training loss:
-The validation accuracy starts to stabilize at the end of the 23 epochs between 50% and 60% accuracy.
+The validation accuracy starts to stabilize at the end of the 23 epochs between 60% and 70% accuracy.
 
  <code>
  cd python_server/face_sentiment
