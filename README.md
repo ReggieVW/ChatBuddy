@@ -1,6 +1,5 @@
 # ChatBuddy
 ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
-It integrates video processing, sound processing & chat to interact with the user. 
 
 # System Overview
 ![image](https://user-images.githubusercontent.com/35894891/120652369-01346100-c480-11eb-95cf-047b5bf425fe.png)
@@ -21,7 +20,7 @@ It integrates video processing, sound processing & chat to interact with the use
  </p>
 
 # Server Python 
-To run the server
+To run the server on http://localhost:5000/ </br>
  <code>
  python server.py
  </code>
@@ -46,6 +45,7 @@ To run the server
   - face_recognition</br>
   - imutils</br>
   - mediapipe</br>
+  - sklearn</br>
 
  
  ## Dataset Face Sentiment
@@ -67,7 +67,7 @@ For emotion detection the Kaggle dataset is used. This dataset we use to detect 
 6) Exclude: count faces != 1
 7) Convert to grayscale and use same dimensions as Kaggle dataset
  <code>
- cd utils
+ cd python_server/utils
  </code>
  (cmd) 
  </br>
@@ -90,10 +90,10 @@ python resize_images.py
  
 ## Face Sentiment Analysis – Training (CNN)
  
-![image](https://user-images.githubusercontent.com/35894891/120639691-ec50d100-c471-11eb-947e-7a29bdee2ee5.png)
+![image](https://user-images.githubusercontent.com/35894891/120776271-5629b300-c524-11eb-80c0-7869df8434d3.png)
  
 Evaluation accuracy and training loss:
-The validation accuracy starts to stabilize at the end of the 23 epochs between 50% and 60% accuracy.
+The validation accuracy starts to stabilize at the end of the 23 epochs between 60% and 70% accuracy.
 
  <code>
  cd python_server/face_sentiment
@@ -154,9 +154,9 @@ python face_recognition_testing.py
 
 a) 1964 at MIT Artificial Intelligence Laboratory by Joseph Weizenbaum.
 
-b) Is a therapist chatbot.
+b) A therapist chatbot.
 
-c) Using a "pattern matching" and substitution methodology.
+c) Uses a "pattern matching" and substitution methodology.
 
 d) Claims passing the Turing Test in the 60's.
 
