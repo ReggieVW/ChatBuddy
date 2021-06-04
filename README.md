@@ -45,6 +45,7 @@ To run the server on http://localhost:5000/ </br>
   - face_recognition</br>
   - imutils</br>
   - mediapipe</br>
+  - sklearn</br>
 
  
  ## Dataset Face Sentiment
