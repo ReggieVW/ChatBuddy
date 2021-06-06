@@ -2,8 +2,7 @@
 ChatBuddy uses artificial intelligence to contribute to the well-being of the elderly persons. 
 
 # System Overview
-![system_overview_4](https://user-images.githubusercontent.com/35894891/120916434-ea715280-c6a9-11eb-987b-330f2b2cd07b.png)
-
+![use_case_login_chat_buddy (4)](https://user-images.githubusercontent.com/35894891/120916702-52746880-c6ab-11eb-9f5e-5827b8c07a38.png)
 
 # Frontend React
 <p>
