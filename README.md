@@ -37,7 +37,7 @@ To run the server on http://localhost:5000/ </br>
   - opencv-python</br>
   - keras</br>
   - pandas</br>
-  - tensorflow (TensorFlow 2.0 is on 4/21 supported on the following 64-bit systems: Python 3.5–3.8)</br>
+  - tensorflow (TensorFlow 2.x is on 4/21 supported on the following 64-bit systems: Python 3.5–3.8)</br>
   - Pillow</br>
   - flask</br>
   - flask_cors</br>
