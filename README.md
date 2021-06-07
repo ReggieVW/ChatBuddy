@@ -48,7 +48,7 @@ To run the server on http://localhost:5000/ </br>
   - sklearn</br>
 
  
- ## Dataset Face Sentiment
+ ## Dataset Face Emotion Detection
  
 For emotion detection the Kaggle dataset is used. This dataset we use to detect 5 facial emotions as listed below:
 'angry': 0, 'happy': 1, 'neutral': 2, 'sad': 3, 'surprise': 4
@@ -88,7 +88,7 @@ python resize_images.py
  (step 7)
  </br>
  
-## Face Sentiment Analysis – Training (CNN)
+## Face Emotion Detection – Training (CNN)
  
 ![image](https://user-images.githubusercontent.com/35894891/120776271-5629b300-c524-11eb-80c0-7869df8434d3.png)
  
@@ -104,7 +104,7 @@ The validation accuracy starts to stabilize at the end of the 23 epochs between 
 python visual_emotion_training.py
  </code>
 
-## Face Sentiment Analysis – Webcam
+## Face Emotion Detection – Webcam
 
 The implementation of our model on a webcam:
 1) Take each frame of the video image by image (using OpenCV).
