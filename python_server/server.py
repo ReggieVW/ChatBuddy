@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
 from flask import Flask, request, Response, jsonify, send_file, make_response 
+from pathlib import Path
 import cv2
 import json
 import numpy as np
@@ -12,13 +13,15 @@ import base64
 from datetime import datetime
 #from camera import VideoCamera
 import face_encoding.face_recognition_knn_training as faceRecog
-from face_sentiment.sentiment_transformer import SentimentImage
-from nlp.sentiment_transformer import SentimentNlp
+from face_emotion.emotion_transformer import EmotionImage
+import nlp.emofromtweet as EmotionNlp
 from eliza.eliza import Eliza
 import urllib
 import io
 from datetime import datetime
 import glob
+import csv
+import os
 
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
@@ -96,7 +99,15 @@ def upload_emotion_image():
         fh.write(base64.b64decode(img_data[22:]))
     path = directory+'/'+img_name+'.jpg'
     img = cv2.imread(path)
-    transformed_img = SentimentImage.transform(img)
+    transformed_img, current_time, label = EmotionImage.transform(img)
+    csv_directory = './result'
+    if not os.path.exists(csv_directory):
+        os.makedirs(csv_directory)
+    # write results to CSV file
+    path_csv = os.path.join(csv_directory, 'emotions.csv')
+    with open(path_csv, 'a+', encoding='UTF8') as f:
+        writer = csv.writer(f)
+        writer.writerow([current_time,'CNN',label])
     path_transformed = directory+'/'+img_name+'_pred.jpg'
     cv2.imwrite(path_transformed, transformed_img)
     print("written file "+ path_transformed)
@@ -124,11 +135,10 @@ def chat_eliza():
     print("chatEliza:")
     eliza = Eliza()
     message = request.args.get('chatMessage')
-    eliza.load('eliza/doctor.txt')
     if(message):
         output = eliza.respond(message)
     else:
-        output = eliza.initial()
+        output = "How are you feeling today?"
     print("message: "+output)
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -136,16 +146,12 @@ def chat_eliza():
     return json.dumps(data)
     
 @app.route('/analyzeSentimentText')
-def analyze_sentiment_text():
-    print("analyzeSentimentText:")
+def analyze_emotion_text():
+    print("emotionDetectionText:")
     if request.args.get('text') is None:
         return json.dumps({"error": "Mandatory parameter missing"})
     sent = request.args.get('text')
-    print("text: "+sent)
-    sentimentNlp = SentimentNlp()
-    label, pred = sentimentNlp.predict(sent)
-    print("label: "+label)
-    print("pred: "+pred)
+    label, pred = EmotionNlp.predict(sent)
     return json.dumps({"label": str(label) + " ("+str(pred) + ")"})
     
 @app.route('/time')
