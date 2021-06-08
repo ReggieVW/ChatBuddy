@@ -31,10 +31,10 @@ export class Monitor extends Component {
     this.eliza = new ElizaBot();
     this.state = {
       images: [],
-	  text_sentiments: [
+	  text_emotions: [
 		{
           text: null,
-          sentiment: null,
+          emotion: null,
         },
 	  ],
       messages: [
@@ -48,7 +48,7 @@ export class Monitor extends Component {
     };
 	this.myRef = React.createRef()
     this.images = [];
-	this.text_sentiments = [];
+	this.text_emotions = [];
     this.debounced_reply = debounce(this.reply, 4000, { maxWait: 10000 });
   }
 
@@ -78,9 +78,9 @@ export class Monitor extends Component {
 			fetch("http://localhost:5000/analyzeSentimentText?text=" + input)
                 .then(res => res.json()).then(data => {
 					console.log("data: ", data);
-				this.state.text_sentiments.push({
+				this.state.text_emotions.push({
 						text: input,
-						sentiment: data.label,
+						emotion: data.label,
 						date: current_date.toLocaleString(),
 						});
 				 });
@@ -116,14 +116,14 @@ export class Monitor extends Component {
 					date: current_date.toLocaleString(),
                   });
                 });
-				}, 2000);
+				}, 3000);
 
 
 
     this.setState({
       messages,
       images: this.images,
-	  text_sentiments : this.text_sentiments,
+	  text_emotions : this.text_emotions,
     });
 
     this.debounced_reply();
@@ -238,12 +238,12 @@ export class Monitor extends Component {
 		     <Carousel>
             {
 				
-				this.state.text_sentiments.map((subItems) => {
+				this.state.text_emotions.map((subItems) => {
               return (<div>
 			  				{
-				subItems.sentiment!= null?
+				subItems.emotion!= null?
                 <div id="my-slide">
-				  <h1>{subItems.sentiment}</h1>
+				  <h1>{subItems.emotion}</h1>
 				  <blockquote id="blockquote">{subItems.text}</blockquote>
                   <p className="legend">{subItems.date}</p>
                 </div>
