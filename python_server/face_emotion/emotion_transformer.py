@@ -4,20 +4,21 @@ from keras.models import model_from_json
 from keras.preprocessing import image
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array  
-from datetime import datetime   	
+from datetime import datetime   
+import pathlib	
+import os
 
 # initialize the Haar Cascade face detection model
 face_haar_cascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
 #load weights
-try:
-    model =load_model(r'face_emotion/Emotion_face.h5')
-except:
-    model =load_model(r'Emotion_face.h5')
+filepath = pathlib.Path(__file__).resolve().parent 
+model =load_model(os.path.join(filepath, 'Emotion_face.h5'))
 
 class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 class EmotionImage:
     def transform(img):
+        label = "unknown"
         gray= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces_detected = face_haar_cascade.detectMultiScale(gray, 1.32, 5)
         print("face detected= "+ str(faces_detected))

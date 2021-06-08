@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
 from flask import Flask, request, Response, jsonify, send_file, make_response 
-from pathlib import Path
 import cv2
 import json
 import numpy as np
@@ -32,33 +31,36 @@ CORS(app)
 @app.route('/register', methods=['POST'])
 def register():
         print("register:")
-    #try:
+    #try:   
         username = request.get_json()['username']
         img_data = request.get_json()['image64']
         img_name = str(int(datetime.timestamp(datetime.now())))
         directory = 'images'
-        directory_train = 'face_encoding\images-train'
         if not os.path.exists(directory):
             os.makedirs(directory)
         with open(directory+'/'+img_name+'.jpg', "wb") as fh:
             fh.write(base64.b64decode(img_data[22:]))
         path = directory + '/'+img_name+'.jpg'
         image = cv2.imread(path)
+        # Detect faces 
         gray= cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         faces_detected = face_haar_cascade.detectMultiScale(gray, 1.32, 5)
         if len(faces_detected) == 0:
             print("no face detected")
             return 'no face detected', 204
+        # Added image for metric learning 
+        directory_train = 'face_encoding/images-train'
         if not os.path.exists(directory_train):
             os.makedirs(directory_train)
         faceRecog.add_image(directory_train, image, username)
-        faceRecog.train('face_encoding/images-train', "face_encoding/trained_knn_model.clf")
+        faceRecog.train(directory_train, "face_encoding/trained_knn_model.clf")
         os.remove(path)   
         return json.dumps({"register": str("OK")})
     #except:
      #   return 'error', 500
 
 def check_user_exist(imagePath):
+    # Check if user exist based on feature vectors 
     predictions = faceRecog.predict_face(imagePath, "face_encoding/trained_knn_model.clf")
     if(predictions):
         name = predictions[0][0]
@@ -97,21 +99,27 @@ def upload_emotion_image():
         os.makedirs(directory)
     with open(directory+'/'+img_name+'.jpg', "wb") as fh:
         fh.write(base64.b64decode(img_data[22:]))
-    path = directory+'/'+img_name+'.jpg'
-    img = cv2.imread(path)
+    # write temp image file
+    temp_image_path = directory+'/'+img_name+'.jpg'
+    img = cv2.imread(temp_image_path)
+    # Get predictions using CNN
     transformed_img, current_time, label = EmotionImage.transform(img)
-    csv_directory = './result'
-    if not os.path.exists(csv_directory):
-        os.makedirs(csv_directory)
     # write results to CSV file
-    path_csv = os.path.join(csv_directory, 'emotions.csv')
-    with open(path_csv, 'a+', encoding='UTF8') as f:
-        writer = csv.writer(f)
-        writer.writerow([current_time,'CNN',label])
+    try:
+        csv_directory = './result'
+        if not os.path.exists(csv_directory):
+            os.makedirs(csv_directory)
+        path_csv = os.path.join(csv_directory, 'emotions.csv')
+        with open(path_csv, 'a+', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow([current_time,'CNN',label])
+    except:
+        print("Error writing csv file")
+    # write image file with predictions
     path_transformed = directory+'/'+img_name+'_pred.jpg'
     cv2.imwrite(path_transformed, transformed_img)
     print("written file "+ path_transformed)
-    os.remove(path)
+    os.remove(temp_image_path)
     return json.dumps({"uploaded": str("OK")})
 
 @app.route('/getEmotionImages')
@@ -119,6 +127,7 @@ def get_emotion_image():
     print("getEmotionImage:")
     profile_name = request.args.get('profilename')
     directory = './images/'+str(profile_name)+'/'
+    # Get latest prediction file
     list_of_files = glob.glob(directory+'/*pred.jpg') 
     latest_file = max(list_of_files, key=os.path.getctime)
     print("Get file =", latest_file)

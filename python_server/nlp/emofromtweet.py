@@ -9,6 +9,7 @@ import nltk
 from time import time
 from emoji import demojize
 import os
+import pathlib
     
 def get_tokenizer_and_encoder(tokenizer_path, encoder_path):
     with tokenizer_path.open('rb') as file:
@@ -20,11 +21,12 @@ def get_tokenizer_and_encoder(tokenizer_path, encoder_path):
     return tokenizer, encoder
 
 def predict(message):
-    model =load_model(r'nlp/model.h5', compile=False)
+    filepath = pathlib.Path(__file__).resolve().parent    
+    model =load_model(os.path.join(filepath, 'model.h5'), compile=False)
     sequence = Series(message)
     sequence = _preprocess(sequence)
-    tokenizer_path = Path('nlp/tokenizer.pickle').resolve()
-    encoder_path = Path('nlp/encoder.pickle').resolve()
+    tokenizer_path = Path(os.path.join(filepath, 'tokenizer.pickle')).resolve()
+    encoder_path = Path(os.path.join(filepath,'encoder.pickle')).resolve()
     tokenizer, encoder = get_tokenizer_and_encoder(tokenizer_path, encoder_path)
     list_tokenized = tokenizer.texts_to_sequences(message)
     sequence = pad_sequences(list_tokenized, maxlen=100)
