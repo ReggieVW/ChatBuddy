@@ -47,6 +47,7 @@ To run the server on http://localhost:5000/ </br>
   - mediapipe</br>
   - sklearn</br>
   - nltk</br>
+  - emoji</br>
 
  
  ## Dataset Face Emotion Detection
