@@ -51,7 +51,7 @@ To run the server on http://localhost:5000/ </br>
   - emoji</br>
 
 Tested with Python 3.8.10 Make sure to install the C++ compiler!
-https://www.youtube.com/watch?v=xaDJ5xnc8dc
+https://www.youtube.com/watch?v=xaDJ5xnc8dc  (on Windows)
  
  ## Dataset Face Emotion Detection
  
