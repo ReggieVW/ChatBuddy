@@ -46,6 +46,8 @@ To run the server on http://localhost:5000/ </br>
   - imutils</br>
   - mediapipe</br>
   - sklearn</br>
+  - nltk</br>
+  - emoji</br>
 
  
  ## Dataset Face Emotion Detection
@@ -96,7 +98,7 @@ Evaluation accuracy and training loss:
 The validation accuracy starts to stabilize at the end of the 23 epochs between 60% and 70% accuracy.
 
  <code>
- cd python_server/face_sentiment
+ cd python_server/face_emotion
   </code>
 (cmd) 
    </br>
@@ -113,7 +115,7 @@ The implementation of our model on a webcam:
 4) Detect the face (using haarcascade_frontalface_default.xml).
 5) Use model to predict the emotion of the input (Keras/TensorFlow).
  <code>
- cd python_server/face_sentiment
+ cd python_server/face_emotion
    </code>
 (cmd) 
    </br>
@@ -141,9 +143,6 @@ Face recognition process:
    </code>
 (cmd) 
    </br>
-   <code>
-python face_recognition_knn_training.py
- </code>
   </br>
    <code>
 python face_recognition_testing.py
