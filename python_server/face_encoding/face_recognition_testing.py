@@ -1,3 +1,7 @@
+"""
+@Author Adam Geitgey
+with some updates by Reginald Van Woensel
+"""
 import numpy as np
 import cv2
 import face_recognition

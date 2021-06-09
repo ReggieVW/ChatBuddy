@@ -103,16 +103,16 @@ def upload_emotion_image():
     temp_image_path = directory+'/'+img_name+'.jpg'
     img = cv2.imread(temp_image_path)
     # Get predictions using CNN
-    transformed_img, current_time, label = EmotionImage.transform(img)
+    transformed_img, label = EmotionImage.transform(img)
     # write results to CSV file
     try:
         csv_directory = './result'
         if not os.path.exists(csv_directory):
             os.makedirs(csv_directory)
         path_csv = os.path.join(csv_directory, 'emotions.csv')
-        with open(path_csv, 'a+', encoding='UTF8') as f:
+        with open(path_csv, 'a+', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow([current_time,'CNN',label])
+            writer.writerow([datetime.now(),'CNN',label])
     except:
         print("Error writing csv file")
     # write image file with predictions

@@ -1,3 +1,11 @@
+#----------------------------------------------------------------------
+#  eliza.py
+#
+#  a cheezy little Eliza knock-off by Joe Strout
+#  with some updates by Jeff Epler
+#  hacked into a module and updated by Jez Higgins
+#----------------------------------------------------------------------
+
 import string
 import re
 import random

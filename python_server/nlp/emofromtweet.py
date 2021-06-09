@@ -28,7 +28,7 @@ def predict(message):
     tokenizer_path = Path(os.path.join(filepath, 'tokenizer.pickle')).resolve()
     encoder_path = Path(os.path.join(filepath,'encoder.pickle')).resolve()
     tokenizer, encoder = get_tokenizer_and_encoder(tokenizer_path, encoder_path)
-    list_tokenized = tokenizer.texts_to_sequences(message)
+    list_tokenized = tokenizer.texts_to_sequences(sequence)
     sequence = pad_sequences(list_tokenized, maxlen=100)
     predictions = model.predict(sequence)
     pred = predictions.argmax(axis=1)
@@ -62,5 +62,10 @@ def _preprocess(texts, quiet=False):
     lambda x: ' '.join([word for word in x.split() if word not in stopwords])
   )
   return texts
+  
+label, pred = predict("I feel happy")
+#label, percentage = sentimentNlp.predict('feeling happy')
+print(label)
+print(pred)
   
   

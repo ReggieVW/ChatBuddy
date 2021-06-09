@@ -1,3 +1,7 @@
+"""
+@Author Adam Geitgey
+with some updates by Reginald Van Woensel
+"""
 import math
 from sklearn import neighbors
 import os
