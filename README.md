@@ -50,7 +50,7 @@ To run the server on http://localhost:5000/ </br>
   - nltk</br>
   - emoji</br>
 
-Tested with Python 3.8 Make sure to install the C++ compiler!
+Tested with Python 3.8.10 Make sure to install the C++ compiler!
  
  ## Dataset Face Emotion Detection
  
