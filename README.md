@@ -35,7 +35,7 @@ To run the server on http://localhost:5000/ </br>
   
   - numpy </br>
   - opencv-python</br>
-  - dlib
+  - dlib  (Install Visual Studio with C++ compiler)</br>
   - keras</br>
   - pandas</br>
   - tensorflow (TensorFlow 2.x is on 4/21 supported on the following 64-bit systems: Python 3.5–3.8)</br>
