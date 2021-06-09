@@ -35,6 +35,7 @@ To run the server on http://localhost:5000/ </br>
   
   - numpy </br>
   - opencv-python</br>
+  - dlib  (Install Visual Studio with C++ compiler)</br>
   - keras</br>
   - pandas</br>
   - tensorflow (TensorFlow 2.x is on 4/21 supported on the following 64-bit systems: Python 3.5–3.8)</br>
@@ -49,6 +50,7 @@ To run the server on http://localhost:5000/ </br>
   - nltk</br>
   - emoji</br>
 
+Tested with Python 3.8.10. Make sure to install the C++ compiler!
  
  ## Dataset Face Emotion Detection
  

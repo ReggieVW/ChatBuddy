@@ -14,3 +14,8 @@ sklearn==0.0
 nltk==3.6.2
 emoji==1.2.0
 pandas==1.2.4
+<<<<<<< .mine
+pandas==1.2.4
+=======
+pandas==1.2.4
+>>>>>>> .theirs
