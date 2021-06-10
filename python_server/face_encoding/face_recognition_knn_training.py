@@ -91,22 +91,22 @@ def predict_face(img_path, trained_model, distance_threshold=0.6):
     return [(pred, loc) if rec else ("unknown", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), face_detected, matches)]
 
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     # STEP 1: Train the KNN classifier and save it to disk
     # Once the model is trained and saved, you can skip this step next time.
-#    print("KNN Classifier is being trained")
-#    train("images-train")
-#    print("Traing is done. You can use the trained model to predict")
+    print("KNN Classifier is being trained")
+    classifier = train("images-train", "trained_knn_model.clf")
+    print("Traing is done. You can use the trained model to predict")
 
-#    result = [['image_label', 'name']]
-#    count = 0
+    result = [['image_label', 'name']]
+    count = 0
     # STEP 2: Using the trained classifier, make predictions for unknown images
-#    for image_file in os.listdir("images-val-pub"):
-#        print(image_file)
-#        count +=1
-#        if count % 100 == 0: print ("Processed {} images".format(count))
-#        full_file_path = os.path.join("images-val-pub", image_file)
-#        predictions = predict(full_file_path)
-#        append_helper = [str(image_file), predictions[0][0]]
-#        result.append(append_helper)
-#print(result)
+    for image_file in os.listdir("images-val-pub"):
+        print(image_file)
+        count +=1
+        if count % 100 == 0: print ("Processed {} images".format(count))
+        full_file_path = os.path.join("images-val-pub", image_file)
+        predictions = predict_face(full_file_path, "trained_knn_model.clf")
+        append_helper = [str(image_file), predictions[0][0]]
+        result.append(append_helper)
+    print(result)

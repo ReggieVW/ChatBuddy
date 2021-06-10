@@ -113,8 +113,8 @@ def upload_emotion_image():
         with open(path_csv, 'a+', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([datetime.now(),'CNN',label])
-    except:
-        print("Error writing csv file")
+    except Exception as e:
+        print("Error writing csv file "+e)
     # write image file with predictions
     path_transformed = directory+'/'+img_name+'_pred.jpg'
     cv2.imwrite(path_transformed, transformed_img)
