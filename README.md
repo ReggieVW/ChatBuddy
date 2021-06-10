@@ -29,6 +29,7 @@ To run the server on http://localhost:5000/ </br>
  </p>
  
  ## Dependencies Python
+ Supported for Python 3.8 </br>
  <code>
   pip install -r requirements.txt 
   </code>
