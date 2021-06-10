@@ -151,6 +151,10 @@ Face recognition process:
 (cmd) 
    </br>
   </br>
+     <code>
+python face_recognition_knn_training.py
+ </code>
+ </br>
    <code>
 python face_recognition_testing.py
  </code>
