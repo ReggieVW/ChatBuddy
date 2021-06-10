@@ -81,8 +81,8 @@ export class Signup extends Component {
           <span className="focus-input100"></span>
          </div>
          <input/>
-         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-         <br/><br/><br/><br/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 								{this.state.signup?<Sketch id="s" setup={this.setup} draw={this.draw}/>:''}
 									
 									<div className="container-login100-form-btn m-t-17">

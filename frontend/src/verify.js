@@ -82,7 +82,7 @@ export class Verify extends Component {
           Sign In With
          </span>
          <input/>
-         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
          <Sketch setup={this.setup} draw={this.draw}/>
          <div className="container-login100-form-btn m-t-17">
          <button id="submit" onClick={this.signin.bind(this)} className="login100-form-btn">
