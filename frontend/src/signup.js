@@ -61,36 +61,29 @@ export class Signup extends Component {
     	this.props.backhome();
     }
 
-	render(){
+		render(){
 
 		let signup = (
-				<div>
-					<div className="limiter">
-						<div className="container-login100">
-							<div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-									<span className="login100-form-title p-b-53">
-										Sign Up
-									</span>
-																
-									<div className="p-t-31 p-b-9">
-										<span className="txt1">
-											Username
-										</span>
-									</div>
-									<div className="wrap-input100 validate-input" data-validate = "Username is required">
-										<input id="usernameid" className="input100" type="text" name="username" />
-										<span className="focus-input100"></span>
-									</div>
-									<br/><br/>
-									<br/><br/>
-
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-
-									{this.state.signup?<Sketch id="s" setup={this.setup} draw={this.draw}/>:''}
+    <div>
+     <div className="limiter">
+      <div className="container-login100">
+       <div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+         <span className="login100-form-title p-b-53">
+          Sign Up With
+         </span>
+         <div className="p-t-31 p-b-9">
+          <span className="txt1">
+           Username
+          </span>
+         </div>
+         <div className="wrap-input100 validate-input" data-validate = "Username is required">
+		<input id="usernameid" className="input100" type="text" name="username" />
+          <span className="focus-input100"></span>
+         </div>
+         <input/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         <br/><br/><br/><br/>
+								{this.state.signup?<Sketch id="s" setup={this.setup} draw={this.draw}/>:''}
 									
 									<div className="container-login100-form-btn m-t-17">
 										<button id="submit" onMouseDown={this.takePicture.bind(this)} className="login100-form-btn">
@@ -101,16 +94,16 @@ export class Signup extends Component {
 										<button onClick={this.logout.bind(this)} className="login100-form-btn">
 											Back!
 										</button>
-									</div>						
-							</div>
-						</div>
-					</div>
-					<div id="dropDownSelect1"></div>
-				</div>
-		)
-    	return (<div >
-    		{ signup }
-    		</div>
+									</div>	  
+       </div>
+      </div>
+     </div>
+     <div id="dropDownSelect1"></div>
+    </div>
+  )
+     return (<div >
+      { signup }
+      </div>
 		)
 	}
 }

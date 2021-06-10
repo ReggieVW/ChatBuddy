@@ -74,43 +74,31 @@ export class Verify extends Component {
 	render(){
 
 		let verify = (<div>
-					<div className="limiter">
-						<div className="container-login100">
-							<div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-									
-									<span className="login100-form-title p-b-53">
-										Sign In
-									</span>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-									<br/><br/>
-
-									<Sketch setup={this.setup} draw={this.draw}/>
-									
-									 
-									<div className="container-login100-form-btn m-t-17">
-										<button id="submit" onMouseDown={this.signin.bind(this)} className="login100-form-btn">
-											Sign In
-										</button>
-									</div>
-									<div className="container-login100-form-btn m-t-17">
-										<button onClick={this.logout.bind(this)} className="login100-form-btn">
-											Back!
-										</button>
-									</div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-		)
+     <div className="limiter">
+      <div className="container-login100">
+       <div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+        
+         <span className="login100-form-title p-b-53">
+          Sign In With
+         </span>
+         <input/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         <Sketch setup={this.setup} draw={this.draw}/>
+         <div className="container-login100-form-btn m-t-17">
+         <button id="submit" onClick={this.signin.bind(this)} className="login100-form-btn">
+           Sign In
+         </button>
+         </div>
+         <div className="container-login100-form-btn m-t-17">
+         <button onClick={this.logout.bind(this)} className="login100-form-btn">
+           Back!
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+   <div id="dropDownSelect1"></div></div>
+  )
 
 
     	return (<div >
