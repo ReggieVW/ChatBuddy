@@ -18,6 +18,8 @@ ChatBuddy uses artificial intelligence to contribute to the well-being of the el
  </code>
  Runs the web app on http://localhost:3000/
  </p>
+ 
+ Tested with Chrome, Edge and Firefox
 
 # Server Python 
 To run the server on http://localhost:5000/ </br>
