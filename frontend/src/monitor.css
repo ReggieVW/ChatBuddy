@@ -12,6 +12,12 @@ video{
     float:left;
 }
 
+#div_container
+{
+   position:relative;
+   height: 5vw;
+}
+
 #my-slide {
  align-items:center;
  justify-content:center;
