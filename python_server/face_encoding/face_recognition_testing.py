@@ -81,8 +81,6 @@ while True:
     predictions = predict(rgb_small_frame, model_path="trained_knn_model.clf")
 
     # Display results overlaid on webcam video
-    print (rgb_small_frame.shape)
-    print (rgb_small_frame.dtype)
     show_labels_on_webcam(frame, predictions)
 
     # Hit 'q' on the keyboard to quit!
