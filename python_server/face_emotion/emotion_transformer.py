@@ -48,7 +48,7 @@ class EmotionImage:
                     cv2.putText(img,"Sad : " + "{0:.0%}".format(preds[3]),(x-200,y+140),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Surprise : " + "{0:.0%}".format(preds[4]),(x-200,y+170),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     #cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
-        return img, current_time, label
+        return img, label
 
 #img = cv2.imread("1622296082_pred.jpg")
 #transformed_img = SentimentImage.transform(img)
