@@ -41,13 +41,11 @@ class EmotionImage:
                     label_position = (x,y)
                     now = datetime.now()
                     current_time = now.strftime("%H:%M:%S")
-                    #cv2.putText(img,"Time : "+current_time,(50,50),cv2.FONT_HERSHEY_SIMPLEX,2,(255, 212, 59),3)
                     cv2.putText(img,"Angry : " + "{0:.0%}".format(preds[0]),(x-200,y+50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Happy : " + "{0:.0%}".format(preds[1]),(x-200, y+80),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Neutral : " + "{0:.0%}".format(preds[2]),(x-200,y+110),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Sad : " + "{0:.0%}".format(preds[3]),(x-200,y+140),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
                     cv2.putText(img,"Surprise : " + "{0:.0%}".format(preds[4]),(x-200,y+170),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
-                    #cv2.putText(img,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
         return img, label
 
 #img = cv2.imread("1622296082_pred.jpg")
