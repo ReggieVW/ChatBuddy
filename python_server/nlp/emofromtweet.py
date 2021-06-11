@@ -63,9 +63,6 @@ def _preprocess(texts, quiet=False):
   )
   return texts
   
-label, pred = predict("I feel happy")
-#label, percentage = sentimentNlp.predict('feeling happy')
-print(label)
-print(pred)
+
   
   
