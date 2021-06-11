@@ -30,6 +30,11 @@ To run the server on http://localhost:5000/ </br>
  
  ## Dependencies Python
  Supported for Python 3.8 </br>
+  <code>
+ cd python_server    
+   </code>
+   (cmd)
+   </br>
  <code>
   pip install -r requirements.txt 
   </code>
@@ -151,6 +156,10 @@ Face recognition process:
 (cmd) 
    </br>
   </br>
+     <code>
+python face_recognition_knn_training.py
+ </code>
+ </br>
    <code>
 python face_recognition_testing.py
  </code>
