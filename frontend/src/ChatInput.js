@@ -40,8 +40,7 @@ class ChatInput extends Component {
 
   render() {
     return (
-		<div>
-	  <Dictaphone parentCallback = {this.callbackFunction}/>
+		<div id="div_container">
       <Input
         className="chatInput"
         onChange={this.handleChange}
@@ -50,6 +49,7 @@ class ChatInput extends Component {
         placeholder='Write to ChatBuddy...'
         value={this.state.value}
       />
+	  	  <Dictaphone parentCallback = {this.callbackFunction}/>
 	   </div>
     );
   }
