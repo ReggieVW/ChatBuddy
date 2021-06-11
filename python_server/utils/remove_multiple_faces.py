@@ -22,5 +22,4 @@ for subdir, dirs, files in os.walk("\\images\\"):
                     os.remove(filepath)
             except:
                 print("error" +filepath)
-            #faces = detector(gray) 
 

@@ -18,6 +18,6 @@ for subdir, dirs, files in os.walk(r'\\images\\'):
             gray= cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             resized = cv2.resize(gray, dim, interpolation = cv2.INTER_AREA)
             print('Resized Dimensions : ',resized.shape)
-            # save a image using extension
+            # save image 
             result=cv2.imwrite(filepath, resized)
  
