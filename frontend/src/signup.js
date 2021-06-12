@@ -71,7 +71,10 @@ export class Signup extends Component {
          <span className="login100-form-title p-b-53">
           Sign Up With
          </span>
-         <div className="p-t-31 p-b-9">
+         <input/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		          <div className="p-t-31 p-b-9">
           <span className="txt1">
            Username
           </span>
@@ -80,9 +83,6 @@ export class Signup extends Component {
 		<input id="usernameid" className="input100" type="text" name="username" />
           <span className="focus-input100"></span>
          </div>
-         <input/>
-         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 								{this.state.signup?<Sketch id="s" setup={this.setup} draw={this.draw}/>:''}
 									
 									<div className="container-login100-form-btn m-t-17">
